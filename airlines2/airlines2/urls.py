@@ -1,4 +1,4 @@
-"""airline URL Configuration
+"""airlines2 URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/4.0/topics/http/urls/
@@ -13,14 +13,13 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-import imp
-from unicodedata import name
 from django.contrib import admin
 from django.urls import path
-from new_air.views import homepage_view
+from homepage.views import homepage_view
+from django.conf.urls.static import static
+from django.conf import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', homepage_view, name='homepage'),
-
-]
+]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
