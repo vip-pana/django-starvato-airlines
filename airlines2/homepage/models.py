@@ -1,4 +1,5 @@
 from django.db import models
+from datetime import datetime
 
 # Create your models here.
 class Airport(models.Model): #aereoporto modello
@@ -18,5 +19,10 @@ class UnderBanner(models.Model):
 
 
 class Fly(models.Model):
-    start = models.ForeignKey(Airport, on_delete=models.CASCADE)
-    arrive = models.ForeignKey(Airport, on_delete=models.CASCADE)
+    start = models.ForeignKey(Airport, related_name='start', on_delete=models.CASCADE, default=None)
+    arrive = models.ForeignKey(Airport, related_name='arrive',on_delete=models.CASCADE, default=None)
+    orario = models.DateTimeField(auto_now=False, auto_now_add=False, default=datetime.now())
+
+
+    def __str__(self):
+        return self.start + '-' + self.arrive
