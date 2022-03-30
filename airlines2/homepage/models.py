@@ -18,7 +18,7 @@ class UnderBanner(models.Model):
     description = models.TextField(max_length=200, default='description undefined')
 
 
-class Fly(models.Model):
+class Fly(models.Model):  #non funge il save
     start = models.ForeignKey(Airport, related_name='start', on_delete=models.CASCADE, default=None)
     arrive = models.ForeignKey(Airport, related_name='arrive',on_delete=models.CASCADE, default=None)
     orario = models.DateTimeField(auto_now=False, auto_now_add=False, default=datetime.now())

@@ -12,3 +12,6 @@ def homepage_view(request, *args, **kwargs):
         'under_banners':under_banners
     }
     return render(request, 'homepage.html', context)
+
+def aggiungi_dati(request):
+    pass
