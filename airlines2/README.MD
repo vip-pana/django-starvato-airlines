@@ -7,6 +7,7 @@ ho la homepage di base che estende base.html e va bene, le immagini si caricano 
 ora devo:
 -capire come prendere dati dall'html, collegare bottone ricerca a un effettiva ricerca
 -capire come usare funzioni dentro a django/djangoHTML
+capito devo usarei form di django 
 -creare una pagina di ricerca dove vengono mostrati i risultati della ricerca fatta, questa figlia di homepage
 
 -come creare sotto admin
