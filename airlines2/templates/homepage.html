@@ -2,7 +2,7 @@
 <!-- è solo estetico nulla di funzionante ancora -->
 {% block content %}
 
-<form action="" method="post" class="mb-5 mt-5"> <!-- questo è il form di ricerca per aereoporti e giorno di volo -->
+<form action="/search/" method="post" class="mb-5 mt-5">  {% csrf_token %}<!-- questo è il form di ricerca per aereoporti e giorno di volo -->
     <div class="container">
         <div class="row">
             <div class="col">
@@ -27,7 +27,7 @@
                 <div class="form-floating">
                     <select class="form-select" id="floatingSelectGrid" aria-label="Floating label select example">
                         {%for airport in airports%}
-                        <option value={{airport.name}}>{{airport.name}}</option>
+                        <option value={{airport.id}}>{{airport.name}}</option>
                         {%endfor%}
                     </select>
                     <label for="floatingSelectGrid">Partenza</label>
@@ -37,7 +37,7 @@
                 <div class="form-floating">
                     <select class="form-select" id="floatingSelectGrid" aria-label="Floating label select example">
                         {%for airport in airports%}
-                        <option value={{airport.name}}>{{airport.name}}</option>
+                        <option value={{airport.id}}>{{airport.name}}</option>
                         {%endfor%}
                     </select>
                     <label for="floatingSelectGrid">Arrivo</label>
