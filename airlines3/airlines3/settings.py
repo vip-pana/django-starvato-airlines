@@ -81,7 +81,7 @@ WSGI_APPLICATION = 'airlines3.wsgi.application'
 DATABASES = {
     'default':{
       'ENGINE':'django.db.backends.postgresql_psycopg2',
-      'NAME':'airlines4',
+      'NAME':'airlines5',
       'USER':'postgres',
       'PASSWORD':'postgres',
       'HOST':'localhost',

@@ -16,10 +16,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from prenotazione.views import home_view
+from prenotazione.views import home_view, search_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home_view),
+    path('search/', search_view),
 
 ]

@@ -12,7 +12,8 @@ class Airport(models.Model):
         return self.name
 
 class Fly(models.Model):
-    start = models.ForeignKey(Airport, default=None, on_delete=models.SET_DEFAULT, related_name='start')
-    arrive = models.ForeignKey(Airport, default=None, on_delete=models.SET_DEFAULT, related_name='arrive')
-    time = models.DateField()
+    start = models.ForeignKey(Airport, on_delete=models.SET_NULL, null=True, related_name='start', default=-1)
+    arrive = models.ForeignKey(Airport, on_delete=models.SET_NULL, null=True, related_name='arrive', default=-2)
+    time = models.DateField(null=True)
+    hourStart = models.TimeField()
     

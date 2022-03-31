@@ -4,7 +4,7 @@
 
 {% block content %}
 
-<form action="" method="POST">
+<form action="/search/" method="POST">
 
     {% csrf_token %}
 
@@ -29,14 +29,6 @@
         </div>
         <div class="row mt-5" style="display: flex;align-items: center;">
             <div class="col">
-               {% comment %}  <div class="form-floating"> {% endcomment %}
-                   {% comment %}  <select class="form-select" id="floatingSelectGrid" aria-label="Floating label select example">
-                        {%for airport in airports%}
-                        <option value={{airport.id}}>{{airport.name}}</option>
-                        {%endfor%}
-                    </select>
-                        <label for="floatingSelectGrid">Partenza</label>
-                    </div> {% endcomment %}
                   <div class="form-floating">
                     {%render_field search.start class='form-select' id='floatingSelectGrid' aria-label="Floating label select example" %}
                     <label for="floatingSelectGrid">Partenza</label>
