@@ -20,7 +20,7 @@ crea volo:
 
 capire meglio require per gli urls
 per fare il form devo usare gli elementi dei forms di django e crsf token
-capire cme inserire bootstrap nel forms.py
+capire come inserire bootstrap nel forms.py
 
 
 forse costraints 
