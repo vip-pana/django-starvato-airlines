@@ -1,5 +1,6 @@
 {% extends 'base.html'%}
 
+{% load widget_tweaks %}
 
 {% block content %}
 <nav class="navbar navbar-light bg-light">
@@ -14,26 +15,17 @@
         </button>
         <div class="collapse" id="collapseExample">
             <div class="card card-body">
-                <form action="" method="post"> {% csrf_token %}
+                <form action="" method="post">
+                    {% csrf_token %}
                     <div class="col-md">
                         <div class="form-floating">
-                            <select class="form-select" id="floatingSelectGrid" aria-label="Floating label select example">
-                                <option selected>Open this select menu</option>
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
-                            </select>
+                                {%render_field search.start class='form-select' id='floatingSelectGrid' aria-label="Floating label select example" %}
                             <label for="floatingSelectGrid">Works with selects</label>
                         </div>
                     </div>
                         <div class="col-md">
                             <div class="form-floating mt-2">
-                                <select class="form-select" id="floatingSelectGrid" aria-label="Floating label select example">
-                                    <option selected>Open this select menu</option>
-                                    <option value="1">One</option>
-                                    <option value="2">Two</option>
-                                    <option value="3">Three</option>
-                                </select>
+                                {%render_field search.arrive class='form-select' id='floatingSelectGrid' aria-label="Floating label select example" %}
                                 <label for="floatingSelectGrid">Works with selects</label>
                             </div>
                         </div>
@@ -44,7 +36,7 @@
                           </div>
                         <div class="col-md">
                             <div class="d-grid gap-2">
-                                <button type="button" class="btn btn-warning mt-2">Warning</button>
+                                <button type="submit" class="btn btn-warning mt-2" value="Save">Warning</button>
                             </div>
                         </div>
                     </div>

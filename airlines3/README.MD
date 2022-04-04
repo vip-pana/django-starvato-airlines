@@ -30,3 +30,6 @@ _____________________________________________________________________________--
 il form di ricerca base funziona quasi del tutto devo solo collegare come mettere
 per farlo è un po un casino o creo la funzione dentro o metto nell'action che chiama la funzione o boh non ho capit
 
+
+vedere urls per le app
+vedere redirect
