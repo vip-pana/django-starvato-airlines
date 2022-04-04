@@ -1,0 +1,96 @@
+{% extends 'base.html'%}
+
+{% load widget_tweaks %}
+
+{% block content %}
+<nav class="navbar navbar-light bg-light">
+    <div class="container">
+        <div class="row">
+            <h5 class="col-5">{{search.arrive}} => {{search.start}}</h5>
+        </div>
+        <button class="btn btn-warning" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+            Cambia la ricerca
+        </button>
+        <div class="collapse" id="collapseExample">
+            <div class="card card-body">
+                <form action="" method="post">
+                    {% csrf_token %}
+                    <div class="col-md">
+                        <div class="form-floating">
+                              {% comment %}   {%render_field search.start class='form-select' id='floatingSelectGrid' aria-label="Floating label select example" %} {% endcomment %}
+                            <label for="floatingSelectGrid">Works with selects</label>
+                        </div>
+                    </div>
+                        <div class="col-md">
+                            <div class="form-floating mt-2">
+                                {% comment %} {%render_field search.arrive class='form-select' id='floatingSelectGrid' aria-label="Floating label select example" %} {% endcomment %}
+                                <label for="floatingSelectGrid">Works with selects</label>
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <div class="input-group-lg"> <!-- aggiungere label a tutti i campi del form -->
+                                <input type="date" name="" class='form-control datetime mt-2' id="">
+                            </div>
+                          </div>
+                        <div class="col-md">
+                            <div class="d-grid gap-2">
+                                <button type="submit" class="btn btn-warning mt-2" value="Save">Warning</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</nav>
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <ul class="list-group">
+                {% for query in querySet %}
+                <li class="list-group-item mt-5">
+                    <div class="row">
+                        <div class="col">
+                            Partenza :</br> {{query.Fly_start}} </br> </br> {{query.Fly_hour}}
+                        </div>
+                        <div class="col">
+                            Arrivo :</br> {{query.Fly_arrive}} </br> </br> {{query.Fly_hour}}
+                        </div>
+                        <div class="col">
+                            <div class="d-grid gap-2">
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                    Launch demo modal
+                                  </button>
+                                  
+                                  <!-- Modal -->
+                                  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                      <div class="modal-content">
+                                        <div class="modal-header">
+                                          <h5 class="modal-title" id="exampleModalLabel">expensive ticket</h5>
+                                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                          <div class="row">
+                                              <ul>
+                                                  <!-- QUI CI VA LA SCELTA DEL POSTO E CON LA CONFERMA VIENE MANDATO IL BIGLIETTO ALL'EMAIL-->
+                                              </ul>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                          <button type="button" class="btn btn-primary">Save changes</button>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                        </div>
+                        </div>
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock content %}

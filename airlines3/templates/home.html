@@ -1,13 +1,8 @@
 {% extends 'base.html' %}
 
-{% load widget_tweaks %}
-
 {% block content %}
 
-<form action="" method="POST">
-
-    {% csrf_token %}
-
+<form action="" method="POST"> {% csrf_token %}
     <div class="container mt-4">
         <div class="row justify-content-start">
             <div class="col-2">
@@ -30,20 +25,28 @@
         <div class="row mt-5" style="display: flex;align-items: center;">
             <div class="col">
                   <div class="form-floating">
-                    {%render_field search.start class='form-select' id='floatingSelectGrid' aria-label="Floating label select example" %}
+                      <select name="" class='form-select' id="floatingSelectGrid" aria-label="Floating label select example" required>
+                          {%for searchFlyone in searchFly.starting%}
+                          <option value={{searchFlyone.id}}> {{searchFlyone}} </option>
+                          {% endfor %}
+                      </select>
                     <label for="floatingSelectGrid">Partenza</label>
                   </div>
             </div>
             <div class="col">
                 <div class="form-floating">
-                    {%render_field search.arrive class='form-select' id='floatingSelectGrid' aria-label="Floating label select example" %}
+                    <select name="" class='form-select' id="floatingSelectGrid" aria-label="Floating label select example" required>
+                        {%for searchFlyone in searchFly.arriving%}
+                        <option value={{searchFlyone.id}}>{{searchFlyone.name}}</option>
+                        {% endfor %}
+                    </select>
                     <label for="floatingSelectGrid">Arrivo</label>
                   </div>
             </div>
             <div class="col">
                 <div class="input-group">
                     <div class="input-group-lg"> <!-- aggiungere label a tutti i campi del form -->
-                        {%render_field search.time type='date' class='form-control' class+='datetime'%}
+                        <input type="date" class='form-control datetime' name="" id="" required>
                     </div>
                   </div>
             </div>

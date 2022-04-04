@@ -1,9 +1,9 @@
 from django import forms
 
 
-from .models import Fly
+from .models import SearchFly
 
-class SearchForm(forms.ModelForm):
+class SearchFly(forms.ModelForm):
     class Meta:
-        model = Fly
-        fields = ['start', 'arrive', 'time']
+        model = SearchFly
+        fields = ['starting', 'arriving', 'timing']

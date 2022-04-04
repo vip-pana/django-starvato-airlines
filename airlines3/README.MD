@@ -2,18 +2,12 @@ airlines v.3.0
 
 ho ricreato il tutto per tenerlo piu' pulito e ho usato un altro database perche' avevo incasinato quello prima
 
-domanda: dopo aver fatto un cambiamento tipo cambiare proprio il tipo di field di un modello cosa devo fare per salvare questa migrazione senza incasinare tutto o dover ricreare il db
-
 ho creato l'app prenotazione che possiede i models airports collegato con chiave esterna a fly,
 fly usa il file forms.py per dare un form visibile al template,
 viene tutto inserito nel context della views che renderizza home.html
 
 il form e' visibile con le sue modifiche grazie al modulo di django installato a parte 'widget_tweaks'
 che permette di modificare direttamente sul html
-
-PROBLEMI:
-- dentro alle select non so come modificare i value delle option per dargli un ID cosi da usare per la search
--p.s. voglio capire come fare anche senza widget_tweaks a mettere i value nelle option
 
 -capire come estrarre i dati utilizzando i widget_tweaks, senza e' fattibile ma con ho notato qualche problema
 
@@ -33,3 +27,70 @@ per farlo è un po un casino o creo la funzione dentro o metto nell'action che c
 
 vedere urls per le app
 vedere redirect
+
+
+_______________________________________________________________________________-
+
+from django.shortcuts import redirect, render
+
+from prenotazione.models import Fly
+
+from .forms import SearchForm
+from .models import Airport, SearchFly
+
+
+def home_view(request, *args, **kwargs):#devo richiamare gli aerei perche search form non va piu bene
+    
+    search = SearchForm()
+    
+    airports = Airport.objects.all()
+    context_home = {'search':search,
+                    'airports':airports,
+    }
+
+    if request.method == 'POST':
+        
+        search = SearchForm(request.POST)
+        
+        if search.is_valid():
+            startForm = request.POST['start']
+            arriveForm = request.POST['arrive']
+            timeForm = request.POST['time']
+            querySet = Fly.objects.filter(start=startForm, arrive = arriveForm, time=timeForm)
+
+            try:
+                if querySet[0]:
+                    search.save()
+                    return redirect('/search/')
+            except:
+                print('nessun risultato')
+        else:
+            
+            print(search.errors)
+    return render(request, 'home.html', context_home)
+
+
+def search_view(request,*args, **kwargs):
+    search = SearchForm()
+    searchFly = SearchFly()
+    searcher = SearchFly.objects.latest('id')
+    print(searcher)
+    if request.method == 'POST':
+        search = SearchForm(request.POST)
+        print(search)
+        if search.is_valid():
+            startForm = request.POST['start']
+            arriveForm = request.POST['arrive']
+            timeForm = request.POST['time']
+            querySet = Fly.objects.filter(start=startForm, arrive = arriveForm, time=timeForm)
+
+    search_context = {
+        'search': search,
+        'searchFly': searchFly,
+    }
+    print('ciao')
+    return render(request, 'search.html', search_context)
+
+
+
+
