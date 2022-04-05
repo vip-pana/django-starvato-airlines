@@ -80,7 +80,7 @@ WSGI_APPLICATION = 'airlines4.wsgi.application'
 DATABASES = {
     'default':{
       'ENGINE':'django.db.backends.postgresql_psycopg2',
-      'NAME':'airlines7',
+      'NAME':'airlines8',
       'USER':'postgres',
       'PASSWORD':'postgres',
       'HOST':'localhost',

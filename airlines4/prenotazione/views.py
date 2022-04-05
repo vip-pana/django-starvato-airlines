@@ -1,3 +1,4 @@
+from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from .forms import SearchForm
 from .models import Fly, Search
@@ -13,18 +14,23 @@ def home_view(request):
                 search = SearchForm(request.POST, instance=first_search)
         except:
             print('non esiste una ricerca')
+            first_search=False
             search = SearchForm(request.POST)
         if search.is_valid():
-            querySet= Fly.objects.filter(Fly_start=request.POST['start'], Fly_arrive=request.POST['arrive'], Fly_day=request.POST['day'])
-            if querySet[0]:
-                print(querySet)
-                if first_search:
-                    return redirect('/search/')
-                else:
-                    search.save()
-                    return redirect('/search/')
+            try:
+                querySet= Fly.objects.filter(Fly_start=request.POST['start'], Fly_arrive=request.POST['arrive'], Fly_day=request.POST['day'])
+                if querySet[0]:
+                    print(querySet)
+                    if first_search:
+                        return redirect('/search/')
+                    else:
+                        search.save()
+                        return redirect('/search/')
+            except:
+                print('non ci sono risultati')
         else:
             print('non sono valido')
+            
     else:
         print(search.errors)
     context = {
