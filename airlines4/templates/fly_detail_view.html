@@ -1,13 +1,12 @@
-{% extends 'base.html'%}
-
-{% load widget_tweaks %}
+{% extends 'base.html' %}
 
 {% block content %}
 <nav class="navbar navbar-light bg-light">
     <div class="container">
         <div class="row">
-            <h5 class="col-5">{{search.start}} => {{search.arrive}}</h5>
+            <h5 class="col-5"> {{querySet.Fly_start}} => {{querySet.Fly_arrive}}</h5>
         </div>
+        <a href="{%url 'search'%}" class="btn btn-warning">torna alla ricerca</a>
         <button class="btn btn-warning" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
             Cambia la ricerca
         </button>
@@ -43,34 +42,32 @@
     </div>
 </nav>
 <div class="container">
-    <div class="row">
+    <div class="row align-items-start">
         <div class="col">
-            <ul class="list-group">
-                {% for query in querySet %}
-                <li class="list-group-item mt-5">
-                    <div class="row">
-                        <div class="col">
-                            Partenza :</br> {{query.Fly_start}} </br> </br> {{query.Fly_hour}}
-                        </div>
-                        <div class="col">
-                            Arrivo :</br> {{query.Fly_arrive}} </br> </br> {{query.Fly_hour}}
-                        </div>
-                        <div class="col">
-                            <div class="d-grid gap-2">
-                                <a href= {% url 'fly_detail' query.id %} class="btn btn-primary">al biglietto</a>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-                {% endfor %}
-            </ul>
+            One of three columns
+        </div>
+        <div class="col">
+            One of three columns
+        </div>
+        <div class="col">
+            One of three columns
         </div>
     </div>
+    <div class="row justify-content-around">
+        <div class="col-4">
+            One of two columns
+        </div>
+        <div class="col-4">
+            One of two columns
+        </div>
+    </div>
+    <div class="row justify-content-start">
+        <div class="col-4">
+          One of two columns
+        </div>
+        <div class="col-4">
+          One of two columns
+        </div>
+      </div>
 </div>
-
-<script>
-
-    
-</script>
-{% endblock content %}
-
+{% endblock %}

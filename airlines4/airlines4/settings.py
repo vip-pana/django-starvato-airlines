@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-g+ylyk(##croz478ojlout@9$m$d==*q0da^w!q5i2@^aizfym
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -80,7 +80,7 @@ WSGI_APPLICATION = 'airlines4.wsgi.application'
 DATABASES = {
     'default':{
       'ENGINE':'django.db.backends.postgresql_psycopg2',
-      'NAME':'airlines8',
+      'NAME':'airlines10',
       'USER':'postgres',
       'PASSWORD':'postgres',
       'HOST':'localhost',

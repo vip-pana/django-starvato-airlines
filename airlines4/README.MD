@@ -33,7 +33,12 @@ devo creare la page prenotazione che è legata all'id del volo che quando da sea
 
 devo vedermi i video sui detail delle pagine
 
-to-do: 
-crea pagina detail
+to-do:  
+crea pagina detail FATTO
 in questa pagina mostrare matrice posti e dopo la selezione nella stessa pagina contact form per ricevere la mail
-mettere nel for del filtro il bottone che è a href collegato alla pagina prenotazione con id
+
+inserire dati in detail
+inserire matrice
+
+
+

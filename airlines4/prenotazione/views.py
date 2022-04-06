@@ -1,7 +1,11 @@
-from django.http import HttpResponse
+
 from django.shortcuts import redirect, render
+
+
+
 from .forms import SearchForm
 from .models import Fly, Search
+
 
 
 def home_view(request):
@@ -37,6 +41,7 @@ def home_view(request):
         'search':search,
     }
     return render(request, 'home.html', context)
+    
 
 def search_view(request):
     search = Search.objects.latest('id')
@@ -48,3 +53,12 @@ def search_view(request):
         'fly_start': fly_start
     }
     return render(request, 'search_page.html', context)
+
+
+
+def FlyDetailView(request, id):
+    querySet = Fly.objects.get(id=id)
+    context = {'querySet':querySet}
+    return render(request, 'fly_detail_view.html', context)
+
+  

@@ -33,6 +33,6 @@ class Fly(models.Model):
     Fly_day = models.DateField(default=datetime.now)
     Fly_hour = models.TimeField(default=datetime.now)
     aircraft = models.ForeignKey(Aircraft, on_delete=models.SET_NULL, null=True, default=-4, related_name='aircraft')
-
+    
 
     
