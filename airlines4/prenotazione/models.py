@@ -1,5 +1,9 @@
+
 from datetime import datetime
 from django.db import models
+
+from .utils import unique_id_generator
+from django.db.models.signals import pre_save
 
 class Airport(models.Model):
     name        = models.CharField(max_length=250)
@@ -28,6 +32,7 @@ class Aircraft(models.Model):
         return self.plate_code
 
 class Fly(models.Model):
+    unique_id = models.CharField(max_length=25, default='a')#deve essere un generator
     Fly_start = models.ForeignKey(Airport, on_delete=models.SET_DEFAULT, default=-1, related_name='Fly_start')
     Fly_arrive = models.ForeignKey(Airport, on_delete=models.SET_DEFAULT, default=-2, related_name='Fly_arrive')
     Fly_day = models.DateField(default=datetime.now)
@@ -35,4 +40,22 @@ class Fly(models.Model):
     aircraft = models.ForeignKey(Aircraft, on_delete=models.SET_NULL, null=True, default=-4, related_name='aircraft')
     
 
-    
+class Booking(models.Model):
+    #fly = models.ForeignKey(Fly, on_delete=models.SET_NULL, null=True )
+    booking_code = models.CharField(max_length=36, unique=True, blank=True)
+    name = models.CharField(max_length=200)
+    surname = models.CharField(max_length=200)
+    email = models.EmailField()
+    address = models.CharField(max_length=200)
+    city = models.CharField(max_length=200)
+    state = models.CharField(max_length=200)
+    zip_code = models.IntegerField()
+
+    def __str__(self) -> str:
+        return self.name + ' ' +self.surname + ' ' + self.booking_code
+
+def pre_save_unique_id(sender, instance, *args, **kwargs):
+    if not instance.unique_id:
+        instance.unique_id = unique_id_generator(instance)
+
+pre_save.connect(pre_save_unique_id, sender=Fly)

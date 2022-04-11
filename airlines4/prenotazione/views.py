@@ -1,10 +1,11 @@
 
+from django.http import HttpResponse
 from django.shortcuts import redirect, render
 
 
 
-from .forms import SearchForm
-from .models import Fly, Search
+from .forms import SearchForm, BookingForm
+from .models import Booking, Fly, Search
 
 
 
@@ -58,7 +59,23 @@ def search_view(request):
 
 def FlyDetailView(request, id):
     querySet = Fly.objects.get(id=id)
-    context = {'querySet':querySet}
+    prenotazioni = Booking.objects.all()
+    lista_prenotazioni = []
+    for i in range(len(prenotazioni)):
+        lista_prenotazioni.append(int(prenotazioni[i].booking_code))
+    posti = querySet.aircraft.seats
+    booking = BookingForm()
+    if request.method == 'POST':
+        booking = BookingForm(request.POST or None)
+        if booking.is_valid():
+            booking.save()
+            booking = BookingForm()
+    context = {
+        'querySet':querySet,
+        'posti':posti,
+        'booking':booking,
+        'lista_prenotazioni':lista_prenotazioni,
+        }
     return render(request, 'fly_detail_view.html', context)
 
   
