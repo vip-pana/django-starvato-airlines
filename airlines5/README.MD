@@ -16,3 +16,14 @@ TO-DO:
 
 - dividere i model per app
 - cambiare il select option in quella cosa bella che ha maria
+
+
+
+make_id in utils.py:
+'''cosciente del fatto che non sia sicuro
+devo trovare un modo per confrontare tutti gli id creati e
+se è uguale a qualcuno ricrearlo'''
+
+
+
+SETTINGS PER BENE DI MEDIA_FILES
