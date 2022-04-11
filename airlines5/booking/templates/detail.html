@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% load widget_tweaks %}
+
+{% block content %}
+
+
+<!-- il biglietto -->
+<div class="container">
+    <div class="row justify-content-around mt-3" style="display: flex; align-items: center;">
+        <div class="col-4">
+            <h3>{{querySet.date}}</h3>
+        </div>
+        <div class="col-4">
+            <h4>codice volo:</h4>
+        </div>
+    </div>
+    <div class="row align-items-start mt-3" >
+        <div class="col">
+            <h3>{{querySet.start}}</h3>
+        </div>
+        <div class="col">
+            <h3>{{querySet.arrive}}</h3>
+        </div>
+        <div class="col">
+            <h3>prezzo:</h3>
+        </div>
+    </div>
+    <div class="row justify-content-start mt-3">
+        <div class="col-4">
+            <h3>{{querySet.hour}}</h3>
+        </div>
+        <div class="col-4">
+            <h3>00:00</h3>
+        </div>
+        <div class="col-4">
+            <h3>$00.00</h3>
+        </div>
+    </div>
+</div>
+
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col">
+            <div class="diver">
+                 <!-- legenda scelta posti -->
+                <h4>scegli il posto</h4>
+                <ul class="legend">
+                    <li>
+                        <div class="seat"></div>
+                        <small>n/a</small>
+                    </li>
+                    <li>
+                        <div class="seat selected"></div>
+                        <small>selezionato</small>
+                    </li>
+                    <li>
+                        <div class="seat occupied"></div>
+                        <small>occupato</small>
+                    </li>
+                </ul>
+                <!-- matrice scelta posti -->
+                <div class="containera">
+                </div>
+                <p class="text">hai selezionato il posto <span id="count">0</span></p>
+            </div>
+        </div>
+        <!-- contatti -->
+        </div>
+    </div>
+</div>
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/seats.css' %}">
+<script src="{% static 'js/seats.js' %}"></script>
+
+{% endblock %}

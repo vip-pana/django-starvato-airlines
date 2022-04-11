@@ -38,8 +38,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'widget_tweaks', #installato pacchetto widget-tweaks
+    'views_stuff',   # applicazione per cose visive
     'booking',
+
+    'widget_tweaks', #installato pacchetto widget-tweaks
+
+
 ]
 
 MIDDLEWARE = [
@@ -79,7 +83,7 @@ WSGI_APPLICATION = 'airlines5.wsgi.application'
 DATABASES = { #database impostato su postgreSQL
     'default':{
       'ENGINE':'django.db.backends.postgresql_psycopg2',
-      'NAME':'airlines13',
+      'NAME':'airlines14',
       'USER':'postgres',
       'PASSWORD':'postgres',
       'HOST':'localhost',
@@ -129,6 +133,8 @@ STATICFILES_DIRS = [
 ]
 
 MEDIA_URL = '/images/'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field

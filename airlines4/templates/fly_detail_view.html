@@ -126,6 +126,7 @@
         <li>{{prenotazione}}</li>
     {% endfor %}
     </ul>
+
 <style>
     #prenotazioni{
         display: none;
@@ -142,8 +143,8 @@
         width: 50vh;
         margin-top: 10px;
         border-radius: 20px;
-        
     }
+    
     .seat {
         background: #444451;
         height: 18px;
@@ -211,18 +212,17 @@
     }
 </style>
 
-<script>
-    /* questo e' per stampare posti per aereo */
+<script> /* questo e' per stampare posti per aereo */
     const pyPosti = '{{posti}}'
     let pySection = ['A','B','C','D','E','F']
-    let pyFile = parseInt(pyPosti/6)
-    
-    let prenotazioni = document.querySelectorAll('#prenotazioni li');
-let lista_prenotazioni = []
+    let pyFile = parseInt(pyPosti/pySection)
 
-for(let i = 0; i < prenotazioni.length; i++){
+    let prenotazioni = document.querySelectorAll('#prenotazioni li');
+    let lista_prenotazioni = []
+
+    for(let i = 0; i < prenotazioni.length; i++){
     lista_prenotazioni.push(prenotazioni[i].textContent)
-}
+    }
     const containera = document.getElementsByClassName('containera');
     for(let i = 0; i!=pyFile; i++){
         let rowe = document.createElement('div')
@@ -237,58 +237,58 @@ for(let i = 0; i < prenotazioni.length; i++){
             rowe.appendChild(seat)
         }
         containera[0].appendChild((rowe))
-    }
-
-
-/* questo serve per selezionare i posti */
-const tcontainer = document.querySelector('.containera');
-const tseats = document.querySelectorAll('.rowe .seat:not(.occupied)');
-const count = document.getElementById('count');
-let selectedSeats = document.querySelectorAll('.rowe .seat.selected');
-let selectedSeatsCount = selectedSeats.length;
-let inputField = document.getElementById('code');
-
-
-
-
-
-
-function updateSelectedCount(){
-    selectedSeats = document.querySelectorAll('.rowe .seat.selected')
-    selectedSeatsCount = selectedSeats.length
-    count.innerText = selectedSeatsCount
-}
-
-tcontainer.addEventListener('click', (e)=> { 
-    if (e.target.classList.contains('seat') && !e.target.classList.contains('occupied')){
-        try {
-            selectedSeats[0].classList.remove('selected')
-            e.target.classList.toggle('selected');
-            inputField.value = e.target.id
-
-        } catch (error) {
-            e.target.classList.toggle('selected')
         }
-    }
-    updateSelectedCount();
-});
 
-function seatConferm(){
-    confermSeats = []
-    if (selectedSeatsCount < 1){
-        return alert('non hai selezionato nessun posto')
+
+    /* questo serve per selezionare i posti */
+    const tcontainer = document.querySelector('.containera');
+    const tseats = document.querySelectorAll('.rowe .seat:not(.occupied)');
+    const count = document.getElementById('count');
+    let selectedSeats = document.querySelectorAll('.rowe .seat.selected');
+    let selectedSeatsCount = selectedSeats.length;
+    let inputField = document.getElementById('code');
+
+
+
+
+
+
+    function updateSelectedCount(){
+        selectedSeats = document.querySelectorAll('.rowe .seat.selected')
+        selectedSeatsCount = selectedSeats.length
+        count.innerText = selectedSeatsCount
     }
-    for(let seat = 0; seat < selectedSeats.length; seat++){
+
+    tcontainer.addEventListener('click', (e)=> { 
+        if (e.target.classList.contains('seat') && !e.target.classList.contains('occupied')){
+            try {
+                selectedSeats[0].classList.remove('selected')
+                e.target.classList.toggle('selected');
+                inputField.value = e.target.id
+
+            } catch (error) {
+                e.target.classList.toggle('selected')
+            }
+        }
+        updateSelectedCount();
+    });
+
+    function seatConferm(){
+        confermSeats = []
+        if (selectedSeatsCount < 1){
+            return alert('non hai selezionato nessun posto')
+        }
+        for(let seat = 0; seat < selectedSeats.length; seat++){
+            
+            confermSeats.push(selectedSeats[seat].id) 
+        }
+
         
-        confermSeats.push(selectedSeats[seat].id) 
+
+        document.getElementsByClassName('diver')[0].style.display = 'none';
+        document.getElementsByClassName('contactForm')[0].style.display = 'block'
+        console.log(confermSeats)
     }
-
-    
-
-    document.getElementsByClassName('diver')[0].style.display = 'none';
-    document.getElementsByClassName('contactForm')[0].style.display = 'block'
-    console.log(confermSeats)
-}
 </script>
 
 

@@ -2,6 +2,7 @@ from datetime import datetime
 from django.db import models
 from .utils import unique_id
 
+
 class Airport(models.Model):
     unique_id   = models.CharField(max_length=36, default=unique_id())
     name        = models.CharField(max_length=250)
@@ -11,6 +12,7 @@ class Airport(models.Model):
 
     def __str__(self) -> str:
         return self.name
+
 
 class Aircraft(models.Model):
     unique_id   = models.CharField(max_length=36, default=unique_id())
@@ -23,6 +25,7 @@ class Aircraft(models.Model):
     def __str__(self) -> str:
         return self.model + ' ' + str(self.id)
 
+
 class Fly(models.Model):
     unique_id   = models.CharField(max_length=36, default=unique_id())
     aircraft    = models.ForeignKey(Aircraft, on_delete=models.SET_NULL, null=True, related_name='aircraft')
@@ -33,3 +36,26 @@ class Fly(models.Model):
 
     def __str__(self) -> str:
         return str(self.start) + ' - ' + str(self.arrive) + ' ' +str(self.date)
+
+
+class Search(models.Model):
+    start       = models.ForeignKey(Airport, on_delete=models.SET_NULL, null=True, related_name='S_start')
+    arrive      = models.ForeignKey(Airport, on_delete=models.SET_NULL, null=True, related_name='S_arrive')
+    date        = models.DateField(default=datetime.now)
+
+    def __str__(self) -> str:
+        return str(self.start) + ' ' + str(self.arrive) + ' ' + str(self.date)
+
+
+class Booking(models.Model):
+    unique_id       = models.CharField(max_length=36, default=unique_id())
+    fly             = models.ForeignKey(Fly, on_delete=models.SET_NULL, null=True, related_name='fly_booking')
+    airC_seat       = models.CharField(max_length=5 ,null=True, blank=True)
+    booking_code    = models.CharField(max_length=36, unique=True, blank=True)
+    name            = models.CharField(max_length=200)
+    surname         = models.CharField(max_length=200)
+    email           = models.EmailField()
+    address         = models.CharField(max_length=200)
+    city            = models.CharField(max_length=200)
+    state           = models.CharField(max_length=200)
+    zip_code        = models.IntegerField()

@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% include 'parts/sec_navbar.html' %}
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <ul class="list-group">
+                {% for query in querySet %}
+                <li class="list-group-item mt-5">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col">
+                                <h4>Partenza :</br> {{query.start}}</h4>
+                            </div>
+                            <div class="col">
+                                <h4>Arrivo :</br> {{query.arrive}}</h4>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <h4>{{query.hour}}</h4>
+                            </div>
+                            <div class="col">
+                                <h4>{{query.hour}}</h4>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="d-grid gap-2">
+                                <a href= "{%url 'fly_detail' query.id%}" class="btn btn-primary">vai al biglietto</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
