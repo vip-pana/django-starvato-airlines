@@ -17,7 +17,9 @@ const tseats = document.querySelectorAll('.rowe .seat:not(.occupied)');
 const count = document.getElementById('count');
 let selectedSeats = document.querySelectorAll('.rowe .seat.selected');
 let selectedSeatsCount = selectedSeats.length;
-let inputField = document.getElementById('code');
+let airC_seat = document.getElementById('code');
+let fly = document.querySelectorAll('fly')
+console.log(fly)
 
 for(let i = 0; i!=pyFile; i++){                     /* per ogni fila */
     let rowe = document.createElement('div')
@@ -32,10 +34,9 @@ for(let i = 0; i!=pyFile; i++){                     /* per ogni fila */
     containera[0].appendChild((rowe))
 }
 
-function updateSelectedCount(){
+function updateSelectedSeat(){
     selectedSeats = document.querySelectorAll('.rowe .seat.selected')
-    selectedSeatsCount = selectedSeats.length
-    count.innerText = selectedSeatsCount
+    count.innerText = airC_seat.value
 }
 
 tcontainer.addEventListener('click', (e)=> { 
@@ -43,13 +44,11 @@ tcontainer.addEventListener('click', (e)=> {
         try {
             selectedSeats[0].classList.remove('selected')
             e.target.classList.toggle('selected');
-            
-            inputField.value = e.target.id /* questo non va */
-
+            airC_seat.value = e.target.id
         } catch (error) {
-            console.log('ua')
             e.target.classList.toggle('selected')
+            airC_seat.value = e.target.id
         }
     }
-    updateSelectedCount();
+    updateSelectedSeat();
 });

@@ -51,7 +51,6 @@ class Booking(models.Model):
     unique_id       = models.CharField(max_length=36, default=unique_id())
     fly             = models.ForeignKey(Fly, on_delete=models.SET_NULL, null=True, related_name='fly_booking')
     airC_seat       = models.CharField(max_length=5 ,null=True, blank=True)
-    booking_code    = models.CharField(max_length=36, unique=True, blank=True)
     name            = models.CharField(max_length=200)
     surname         = models.CharField(max_length=200)
     email           = models.EmailField()

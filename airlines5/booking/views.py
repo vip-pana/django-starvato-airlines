@@ -54,13 +54,16 @@ def search_view(request):
 def flyDetailView(request, id):
     querySet = Fly.objects.get(id=id)
     booking = BookingForm()
+    
     if request.method == 'POST':
+        
         booking = BookingForm(request.POST)
         if booking.is_valid():
             booking.save()
             return redirect('/success/')
     context = {
         'querySet':querySet,
+        'booking':booking,
     }
     return render(request, 'detail.html', context)
 
