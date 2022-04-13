@@ -1,4 +1,5 @@
-const pyPosti =  40 /* non va perche' e' in una pagina a se */
+
+console.log(pyPosti) /* non va perche' e' in una pagina a se */
 
 let pySection = ['A','B','C','D','E','F']
 
@@ -18,8 +19,13 @@ const count = document.getElementById('count');
 let selectedSeats = document.querySelectorAll('.rowe .seat.selected');
 let selectedSeatsCount = selectedSeats.length;
 let airC_seat = document.getElementById('code');
-let fly = document.querySelectorAll('fly')
-console.log(fly)
+
+let selectId = document.getElementById('selectId').textContent
+let fly = document.getElementById('fly')
+fly.value = selectId
+
+
+
 
 for(let i = 0; i!=pyFile; i++){                     /* per ogni fila */
     let rowe = document.createElement('div')

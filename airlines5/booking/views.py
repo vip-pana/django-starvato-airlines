@@ -24,8 +24,9 @@ def home_view(request):
             try:
                 querySet = Fly.objects.filter(start = request.POST['start'], arrive=request.POST['arrive'], date=request.POST['date'])
                 if querySet[0] and f_search:
+                    flyForm.save()
                     return redirect('/search/')
-                else:
+                elif querySet[0]:
                     flyForm.save()
                     return redirect('/search/')
             except:
@@ -52,20 +53,21 @@ def search_view(request):
 
 
 def flyDetailView(request, id):
-    querySet = Fly.objects.get(id=id)
+    fly = Fly.objects.get(id=id)
     booking = BookingForm()
-    
     if request.method == 'POST':
-        
         booking = BookingForm(request.POST)
+
         if booking.is_valid():
+            
             booking.save()
             return redirect('/success/')
     context = {
-        'querySet':querySet,
+        'querySet':fly,
         'booking':booking,
     }
     return render(request, 'detail.html', context)
+
 
 def success_view(request):
     return render(request, 'success.html', {})

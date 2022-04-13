@@ -97,15 +97,19 @@
                     <label for="state" class="form-label">State</label>
                     {% render_field booking.state class='form-control' id='state' placeholder="California" %}
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-4">
                     <label for="zip" class="form-label">Zip</label>
                     {% render_field booking.zip_code class='form-control'  id='zip' placeholder="71016" %}
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-4">
                     {% render_field booking.airC_seat class='form-control'  id='code' placeholder="airC_seat" hidden=True %}
                 </div>
-                <div class="col-md-2">
-                    {% render_field booking.fly class='form-control' %}
+                <div class="col-md-6">
+                    {% render_field booking.fly class='form-control'  id='fly' placeholder="fly" hidden=True %}     
+                    <p id="selectId" style="display: none;">{{querySet.id}}</p>          
+                </div>
+                <div class="col-md-4">
+                    {% render_field booking.unique_id class='form-control'  id='unique_id' placeholder="unique_id"  %}
                 </div>
                 <div class="col-12">
                     <div class="form-check">
@@ -120,7 +124,10 @@
         </div>
     </div>
 </div>
-
+<script>
+    const pyPosti =  '{{querySet.aircraft.seats}}'
+    console.log(pyPosti)
+</script>
 <link rel="stylesheet" type="text/css" href="{% static 'css/seats.css' %}">
 <script src="{% static 'js/seats.js' %}"></script>
 
