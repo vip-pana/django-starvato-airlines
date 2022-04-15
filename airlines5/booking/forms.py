@@ -5,6 +5,7 @@ class SearchForm(forms.ModelForm):
     class Meta:
         model = Search
         fields = ['start','arrive','date',]
+        
 
 
 class BookingForm(forms.ModelForm):

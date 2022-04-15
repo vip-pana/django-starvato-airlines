@@ -13,8 +13,8 @@
         <div class="col-4">
             <h3>{{querySet.date}}</h3>
         </div>
-        <div class="col-4">
-            <h4>codice volo:</h4>
+        <div class="col-6">
+            <h5><strong>codice volo:</strong>{{querySet.unique_id}}</h5>
         </div>
     </div>
     <div class="row align-items-start mt-3" >
@@ -72,6 +72,11 @@
         <div class="col">
             <form action="" method="post">
             {% csrf_token %}
+                {% if nullSearch == True %}
+                <div class="alert alert-danger" role="alert" style="text-align: center;">
+                    <h6>Hai dimenticato qualche campo!</h6>
+                </div>
+                {% endif %}
                 <h2>lasciaci i tuoi dati</h2>
                 <div class="col-md-6">
                     <label for="nome" class="form-label">Nome</label>
@@ -105,11 +110,11 @@
                     {% render_field booking.airC_seat class='form-control'  id='code' placeholder="airC_seat" hidden=True %}
                 </div>
                 <div class="col-md-6">
-                    {% render_field booking.fly class='form-control'  id='fly' placeholder="fly" hidden=True %}     
+                    {% render_field booking.fly class='form-control'  id='fly' placeholder="fly" hidden=True%}     
                     <p id="selectId" style="display: none;">{{querySet.id}}</p>          
                 </div>
                 <div class="col-md-4">
-                    {% render_field booking.unique_id class='form-control'  id='unique_id' placeholder="unique_id"  %}
+                    {% render_field booking.unique_id class='form-control'  id='unique_id' placeholder="unique_id" hidden=True %}
                 </div>
                 <div class="col-12">
                     <div class="form-check">
@@ -118,16 +123,30 @@
                     </div>
                 </div>
                 <div class="col-12">
-                    <button type="submit" class="btn btn-primary">Prendi il biglietto</button>
+                    <button type="submit" class="btn btn-primary" onclick="checkForm()">Prendi il biglietto</button>
                 </div>    
             </form>
         </div>
     </div>
 </div>
+
+<ul style="display: none;">
+    {% for elements in saved_booking%}
+    <li class="saved_li">{{elements.airC_seat}}</li>
+    {% endfor %}
+</ul>
+
 <script>
+    function checkForm(){
+        code = document.getElementById('code').value
+        if(code == false){
+            alert('seleziona il posto!')
+        }
+    }
     const pyPosti =  '{{querySet.aircraft.seats}}'
-    console.log(pyPosti)
+    const py_saved_booking = document.getElementsByClassName('saved_li')
 </script>
+
 <link rel="stylesheet" type="text/css" href="{% static 'css/seats.css' %}">
 <script src="{% static 'js/seats.js' %}"></script>
 

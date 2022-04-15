@@ -1,9 +1,8 @@
-from readline import parse_and_bind
 from django.shortcuts import redirect, render
 
 
 from .forms import SearchForm, BookingForm
-from .models import Fly, Search
+from .models import Booking, Fly, Search
 from views_stuff.models import Underbanner
 
 
@@ -11,6 +10,10 @@ from views_stuff.models import Underbanner
 def home_view(request):
     underbanners = Underbanner.objects.all()
     flyForm = SearchForm()
+    context = {
+        'flyForm':flyForm,
+        'underbanners':underbanners,
+    }
     if request.method == 'POST':
         try:
             f_search = Search.objects.latest('id')
@@ -30,13 +33,8 @@ def home_view(request):
                     flyForm.save()
                     return redirect('/search/')
             except:
-                print('form valid ma non funge')
-            
-
-    context = {
-        'flyForm':flyForm,
-        'underbanners':underbanners,
-    }
+                context['nullSearch'] = True
+                print('form valid ma non funge')   
     return render(request, 'home.html', context)
 
 
@@ -54,17 +52,19 @@ def search_view(request):
 
 def flyDetailView(request, id):
     fly = Fly.objects.get(id=id)
+    saved_booking = Booking.objects.filter(fly=fly)
     booking = BookingForm()
     if request.method == 'POST':
         booking = BookingForm(request.POST)
-
         if booking.is_valid():
-            
             booking.save()
             return redirect('/success/')
+        else:
+            context['nullSearch'] = True
     context = {
         'querySet':fly,
         'booking':booking,
+        'saved_booking':saved_booking
     }
     return render(request, 'detail.html', context)
 

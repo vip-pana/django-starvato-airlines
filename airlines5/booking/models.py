@@ -50,7 +50,7 @@ class Search(models.Model):
 class Booking(models.Model):
     unique_id       = models.CharField(max_length=36, default=unique_id())
     fly             = models.ForeignKey(Fly, on_delete=models.SET_NULL, null=True, related_name='fly_booking')
-    airC_seat       = models.CharField(max_length=5 ,null=True, blank=True)
+    airC_seat       = models.CharField(max_length=5)
     name            = models.CharField(max_length=200)
     surname         = models.CharField(max_length=200)
     email           = models.EmailField()
@@ -58,3 +58,6 @@ class Booking(models.Model):
     city            = models.CharField(max_length=200)
     state           = models.CharField(max_length=200)
     zip_code        = models.IntegerField()
+
+    def __str__(self):
+        return str(self.fly) +  ' ' + str(self.id)

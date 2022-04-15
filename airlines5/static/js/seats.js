@@ -1,14 +1,16 @@
 
-console.log(pyPosti) /* non va perche' e' in una pagina a se */
-
 let pySection = ['A','B','C','D','E','F']
-
 let pyFile = parseInt(pyPosti/pySection.length) /* prende i posti e li divide in file per la lunghezza di section */
-
+const array_bookings = []
+for(let m = 0; m < py_saved_booking.length; m ++){
+    array_bookings.push(py_saved_booking[m].textContent)
+}
 /* con questo prendevo la lista delle prenotazioni da python inserita in for loop sull'html
 con display=none... */
 
 /* ...lo prendevo e inserivo dentro una nuova lista */
+
+
 
 
 /* prendo il container dove inserire i posti */
@@ -34,6 +36,11 @@ for(let i = 0; i!=pyFile; i++){                     /* per ogni fila */
         seat = document.createElement('div')        /* creo un posto */
         seat.classList.add('seat')
         seat.id = i + '' + pySection[j] 
+        for(let booked = 0; booked < array_bookings.length; booked++){
+            if(seat.id == array_bookings[booked]){
+                    seat.classList.add('occupied')
+            }
+        }
         /* gli do l'id di css del numero piu' la sezione */
         rowe.appendChild(seat)
     }

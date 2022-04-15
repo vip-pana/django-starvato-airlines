@@ -27,6 +27,11 @@
 
         <!-- form scelta -->
         <div class="row mt-5" style="display: flex; align-items: center;">
+            {% if nullSearch == True %}
+            <div class="alert alert-danger" role="alert" style="text-align: center;">
+                <h6>Nessun risultato :( <br>prova da qualche altra parte!</h6>
+            </div>
+            {% endif %}
             <div class="col">
                 <div class="form-floating">
                     {% render_field flyForm.start class='form-select' id="floatingSelectGrid" aria-label="Floating label select example"%}
