@@ -1,0 +1,4 @@
+django
+pillow
+django-widget-tweaks
+psycopg2-binary
