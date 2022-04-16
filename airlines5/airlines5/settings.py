@@ -83,7 +83,7 @@ WSGI_APPLICATION = 'airlines5.wsgi.application'
 DATABASES = { #database impostato su postgreSQL
     'default':{
       'ENGINE':'django.db.backends.postgresql_psycopg2',
-      'NAME':'airlines14',
+      'NAME':'airlines15',
       'USER':'postgres',
       'PASSWORD':'postgres',
       'HOST':'localhost',
@@ -140,3 +140,12 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# Email settings
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = '587'
+EMAIL_HOST_USER = 'fakestarvatoairlines@gmail.com'
+EMAIL_HOST_PASSWORD = '' #metti un fittizio prima di continuare
+EMAIL_USE_TLS = True
+# EMAIL_USE_SSL = False    

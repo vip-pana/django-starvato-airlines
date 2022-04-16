@@ -54,3 +54,7 @@ creare search come maria
 mandare email per fine di tutto(controllare se bruno ha creato pagamento fittizio)
 creare lista unique id
 aggiungere carosello
+
+----------------------------------------------------------
+funziona il save e lo rende unico
+
