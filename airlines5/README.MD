@@ -51,10 +51,29 @@ sembra che unique id non crei veri problemi devo solo renderli unici effettivame
 
 TODO:
 creare search come maria
-mandare email per fine di tutto(controllare se bruno ha creato pagamento fittizio)
+mandare email per fine di tutto(controllare se bruno ha creato pagamento fittizio) EMAIL FATTA IN PARTE
 creare lista unique id
 aggiungere carosello
 
 ----------------------------------------------------------
-funziona il save e lo rende unico
+aggiornamento, il save funziona e rende unici gli ordini
+riesco a inviare email di conferma dell'ordine alle persone, vorrei inserire html nelle email ma non ho capito ancora bene come si fa
+
+TODO:
+    -MOLTO IMPORTANTI:
+    usare geopy per la distanza dei luoghi e il tempo di arrivo da punto A a punto B, molto importante
+    creare prenotazione per più persone insieme, è un casino
+    creare prenotazione andata e ritorno, credo sia meno un casino
+    creare api per interrogare il codice, non ho ancora capito bene come fare
+    creare login con meno privilegi per chi vuole inserire i voli, più importante
+
+    MEDIA IMPORTANZA:
+    creare pagina di ricerca prenotazione, più importante
+    creare ulteriori variabili di manutenzione ecc, non ho capito se effettivamente le dovremmo fare
+
+    MENO IMPORTANTE:
+    creare search come maria (aspetto di tornare a lezione)
+    inserire pagamento fittizio (aspetto bruno)
+    sistemare estetica sito, meno importante
+    creare email html da inviare, meno importante perché estetica
 

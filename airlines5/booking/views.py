@@ -1,12 +1,12 @@
 
+from cgitb import html
 from django.shortcuts import redirect, render
-
 from airlines5.settings import EMAIL_HOST_USER
 from .forms import SearchForm, BookingForm
 from .models import Booking, Fly, Search
 from views_stuff.models import Underbanner
-from django.core.mail import send_mail
 
+from django.core.mail import send_mail
 
 # Create your views here.
 def home_view(request):
@@ -59,14 +59,16 @@ def flyDetailView(request, id):
     if request.method == 'POST':
         booking = BookingForm(request.POST)     
         if booking.is_valid():
-            message_name = request.POST['name'] + ' ' +request.POST['surname']
+            message_name = request.POST['name']
             message_email_to_send = request.POST['email']
+            ticket = request.POST['unique_id']
+            seat = request.POST['airC_seat']
             send_mail(
-                'Grazie'+ message_name +'per la fiducia!, ecco a lei il suo ticket', #subject
-                'thxx', # message
+                'Grazie '+ message_name +' per la fiducia!, ecco a lei il suo ticket', #subject
+                'Ticket: '+ ticket + '\nposto a sedere ' + seat, # message
                 EMAIL_HOST_USER, # 
                 [message_email_to_send],
-            )
+            ) 
             booking.save()
 
 

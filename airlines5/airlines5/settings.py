@@ -143,8 +143,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 # Email settings
+
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = '587'
+EMAIL_PORT = '587' 
 EMAIL_HOST_USER = 'fakestarvatoairlines@gmail.com'
 EMAIL_HOST_PASSWORD = 'oWi32FCVxbsNtD' #metti un fittizio prima di continuare
 EMAIL_USE_TLS = True
