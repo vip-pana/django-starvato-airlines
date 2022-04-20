@@ -15,6 +15,7 @@ def home_view(request):
     context = {
         'flyForm':flyForm,
         'underbanners':underbanners,
+        'iterator' : range(1, 11)
     }
     if request.method == 'POST':
         try:
@@ -27,7 +28,7 @@ def home_view(request):
             flyForm = SearchForm(request.POST)
         if flyForm.is_valid():
             try:
-                querySet = Fly.objects.filter(start = request.POST['start'], arrive=request.POST['arrive'], date=request.POST['date'])
+                querySet = Fly.objects.filter(start = request.POST['start'], arrive=request.POST['arrive'], date=request.POST['date'], free_seats__gte = request.POST['person'])
                 if querySet[0] and f_search:
                     flyForm.save()
                     return redirect('/search/')
@@ -36,14 +37,13 @@ def home_view(request):
                     return redirect('/search/')
             except:
                 context['nullSearch'] = True
-                print('form valid ma non funge')   
     return render(request, 'home.html', context)
 
 
 def search_view(request):
     underbanners = Underbanner.objects.all()
     search = Search.objects.latest('id')
-    querySet= Fly.objects.filter(start=search.start, arrive=search.arrive, date=search.date)
+    querySet= Fly.objects.filter(start=search.start, arrive=search.arrive, date=search.date, free_seats__gte = search.person)
     context = {
         'underbanners':underbanners,
         'search':search,
@@ -56,6 +56,14 @@ def flyDetailView(request, id):
     fly = Fly.objects.get(id=id)
     saved_booking = Booking.objects.filter(fly=fly)
     booking = BookingForm()
+    person = Search.objects.latest('id').person
+    
+    context = {
+        'querySet':fly,
+        'booking':booking,
+        'saved_booking':saved_booking,
+        'person':person,
+    }
     if request.method == 'POST':
         booking = BookingForm(request.POST)     
         if booking.is_valid():
@@ -68,19 +76,14 @@ def flyDetailView(request, id):
                 'Ticket: '+ ticket + '\nposto a sedere ' + seat, # message
                 EMAIL_HOST_USER, # 
                 [message_email_to_send],
-            ) 
+            )
+            fly.free_seats = fly.free_seats - 1
+            fly.save()
             booking.save()
-
-
-
             return redirect('/success/')
         else:
             context['nullSearch'] = True
-    context = {
-        'querySet':fly,
-        'booking':booking,
-        'saved_booking':saved_booking
-    }
+
     return render(request, 'detail.html', context)
 
 

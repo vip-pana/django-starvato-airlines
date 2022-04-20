@@ -1,6 +1,6 @@
 from datetime import datetime
+from re import M
 from django.db import models
-
 from uuid import uuid4
 
 def generation():
@@ -23,8 +23,6 @@ class Identification(models.Model):
     def __str__(self) -> str:
         return self.saved_id
 
-
-
 class Airport(models.Model):
     unique_id   = models.CharField(max_length=36, blank=True)
     name        = models.CharField(max_length=250)
@@ -38,7 +36,6 @@ class Airport(models.Model):
 
     def __str__(self) -> str:
         return self.name
-
 
 class Aircraft(models.Model):
     unique_id   = models.CharField(max_length=36, blank=True)
@@ -55,17 +52,20 @@ class Aircraft(models.Model):
     def __str__(self) -> str:
         return self.model + ' ' + str(self.id)
 
-
 class Fly(models.Model):
     unique_id   = models.CharField(max_length=36, blank=True)
     aircraft    = models.ForeignKey(Aircraft, on_delete=models.SET_NULL, null=True, related_name='aircraft')
+    free_seats  = models.IntegerField(blank=True, null=True, default=0)
     start       = models.ForeignKey(Airport, on_delete=models.SET_NULL, null=True, related_name='start')
     arrive      = models.ForeignKey(Airport, on_delete=models.SET_NULL, null=True, related_name='arrive')
     date        = models.DateField(default=datetime.now)
     hour        = models.TimeField(default=datetime.now)
+    price       = models.FloatField(default=5.00)
 
     def save(self, *args, **kwargs):
         self.unique_id = generation()
+        if self.free_seats == 0:
+            self.free_seats = self.aircraft.seats
         super().save(*args, **kwargs)
 
     def __str__(self) -> str:
@@ -73,9 +73,22 @@ class Fly(models.Model):
 
 
 class Search(models.Model):
+    PERSON_CHOICES =(
+    ("1", "1"),
+    ("2", "2"),
+    ("3", "3"),
+    ("4", "4"),
+    ("5", "5"),
+    ("6", "6"),
+    ("7", "7"),
+    ("8", "8"),
+    ("9", "9"),
+    ("10", "10"),
+    )
     start       = models.ForeignKey(Airport, on_delete=models.SET_NULL, null=True, related_name='S_start')
     arrive      = models.ForeignKey(Airport, on_delete=models.SET_NULL, null=True, related_name='S_arrive')
     date        = models.DateField(default=datetime.now)
+    person      = models.CharField(max_length=2, choices=PERSON_CHOICES, default=1)#models.CharField(max_length=2, choices=PERSON_CHOICES default=1)
 
     def __str__(self) -> str:
         return str(self.start) + ' ' + str(self.arrive) + ' ' + str(self.date)
@@ -95,6 +108,7 @@ class Booking(models.Model):
 
     def save(self, *args, **kwargs):
         self.unique_id = generation()
+
         super().save(*args, **kwargs)
 
     def __str__(self):

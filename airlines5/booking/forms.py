@@ -4,7 +4,7 @@ from .models import Search, Booking
 class SearchForm(forms.ModelForm):
     class Meta:
         model = Search
-        fields = ['start','arrive','date',]
+        fields = ['start','arrive','date','person']
         
 
 

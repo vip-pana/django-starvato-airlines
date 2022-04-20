@@ -77,3 +77,12 @@ TODO:
     sistemare estetica sito, meno importante
     creare email html da inviare, meno importante perché estetica
 
+----------------------------------------------------------------
+continuato da infobasic,
+adesso gli aerei si scelogono per disponibilita di posti anche
+
+adesso voglio selezionare tot posti per ogni persona che chiede di prenotare
+
+devo rendere la scelta degli aereoporti possibile solo con il primo che connette il secondo e non tutti gli aereoporti
+
+e poi tutti gli errori del caso
