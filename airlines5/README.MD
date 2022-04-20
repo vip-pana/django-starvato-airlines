@@ -86,3 +86,25 @@ adesso voglio selezionare tot posti per ogni persona che chiede di prenotare
 devo rendere la scelta degli aereoporti possibile solo con il primo che connette il secondo e non tutti gli aereoporti
 
 e poi tutti gli errori del caso
+
+devo ricaricare la pagina con i biglietti da prendere per ogni persona che li deve prendere
+
+
+posso mettere una choice field che se e' un numero maggiore di 1 deve mettere come stato pending
+e poi mando la mail a tutte le pending 
+
+
+---------------------------------------------------------------------
+
+sto provando a prendere i biglietti per tot posti per persona
+
+praticamente funziona che e' una prenotazione singola che si fa ricorrente fino a che le persone che hanno prenotato i posti sono finite,
+problemi:
+- invia la mail a ogni persona subito e non quando hanno finito di prendere i biglietti, questo costringe ogni utente ad aver gia preso un biglietto prima di terminare tutte le persone della prenotazione
+
+dovrei prendere le persone a cui inviare la mail direttamente dal model booking
+
+- sto provando a inserire uno status alla prenotazioni cosi da inviare la mail a chi ha lo status di pending e dopo averlo fatto cambiarlo in completed 
+
+aggiornamento, non ho trovato un modo efficace per cambiare lo status(choiceField) dalla views.py, appena lo trovo dovrebbe essere fattibile sistemare molte cose
+

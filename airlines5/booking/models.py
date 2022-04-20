@@ -53,7 +53,7 @@ class Aircraft(models.Model):
         return self.model + ' ' + str(self.id)
 
 class Fly(models.Model):
-    unique_id   = models.CharField(max_length=36, blank=True)
+    unique_id   = models.CharField(max_length=36, blank=True, default="0")
     aircraft    = models.ForeignKey(Aircraft, on_delete=models.SET_NULL, null=True, related_name='aircraft')
     free_seats  = models.IntegerField(blank=True, null=True, default=0)
     start       = models.ForeignKey(Airport, on_delete=models.SET_NULL, null=True, related_name='start')
@@ -63,7 +63,8 @@ class Fly(models.Model):
     price       = models.FloatField(default=5.00)
 
     def save(self, *args, **kwargs):
-        self.unique_id = generation()
+        if self.unique_id == "0":
+            self.unique_id = generation()
         if self.free_seats == 0:
             self.free_seats = self.aircraft.seats
         super().save(*args, **kwargs)
@@ -95,7 +96,13 @@ class Search(models.Model):
 
 
 class Booking(models.Model):
+    STATUS =(
+    ("complete", "complete"),
+    ("pending", "pending"),
+    ("null", "null"),)
+
     unique_id       = models.CharField(max_length=36, blank=True)
+    status          = models.CharField(max_length=15, choices=STATUS, default='null') 
     fly             = models.ForeignKey(Fly, on_delete=models.SET_NULL, null=True, related_name='fly_booking')
     airC_seat       = models.CharField(max_length=5)
     name            = models.CharField(max_length=200)
