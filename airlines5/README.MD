@@ -115,3 +115,32 @@ creo un boolean
 
 
 swagger
+
+ho un campo ritorno ma e' un problema farlo funzionare
+
+devo controllare all'inizio se il campo ritorno e' selezionato
+
+------------------------------------------------------------------------
+sto lavorano sull'andata e ritorno e non con pochi problemi, ho problemi sul comunicare alla views quando attivare andata e quando invece sia andata che ritorno
+
+devo provare con un campo charfield che si scrive
+
+poi devo capire come fare la scelta dei voli, chiedero a lorenzo come ha gestito la sua
+
+TO-DO:
+- PIU IMPORTANTI:
+-- finire andata e ritorno
+-- creare API
+-- creare slides di spiegazione (molto easy)
+
+
+- MEDIA IMPORTANZA
+-- geopy
+-- creare sezione admin per creare voli
+-- creare trova prenotazione
+
+
+- MENO IMPORTANTI
+-- creare ricerca come maria
+-- non far trovare partenza scelta in arrivo scelta
+-- sistemare problema delle prenotazioni multiple se esco dalle scelte mentre sto scegliendo

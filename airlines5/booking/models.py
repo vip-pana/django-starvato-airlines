@@ -1,7 +1,7 @@
 from datetime import datetime
-from statistics import mode
 from django.db import models
 from uuid import uuid4
+
 
 def generation():
     generate = str(uuid4())
@@ -17,11 +17,13 @@ def generation():
         new_id.save()
         return generate 
 
+
 class Identification(models.Model):
     saved_id = models.CharField(max_length=36)
 
     def __str__(self) -> str:
         return self.saved_id
+
 
 class Airport(models.Model):
     unique_id   = models.CharField(max_length=36, blank=True)
@@ -37,6 +39,7 @@ class Airport(models.Model):
     def __str__(self) -> str:
         return self.name
 
+
 class Aircraft(models.Model):
     unique_id   = models.CharField(max_length=36, blank=True)
     model       = models.CharField(max_length=100)
@@ -51,6 +54,7 @@ class Aircraft(models.Model):
 
     def __str__(self) -> str:
         return self.model + ' ' + str(self.id)
+
 
 class Fly(models.Model):
     unique_id   = models.CharField(max_length=36, blank=True, default="0")
@@ -90,6 +94,8 @@ class Search(models.Model):
     start       = models.ForeignKey(Airport, on_delete=models.SET_NULL, null=True, related_name='S_start')
     arrive      = models.ForeignKey(Airport, on_delete=models.SET_NULL, null=True, related_name='S_arrive')
     date        = models.DateField(default=datetime.now)
+    have_return2 = models.CharField(default='no', blank=True, null=True, max_length=5)
+    date_rit    = models.DateField(blank=True, null=True)
     person      = models.CharField(max_length=2, choices=PERSON_CHOICES, default=1)
     
     

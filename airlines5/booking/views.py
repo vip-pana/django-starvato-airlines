@@ -1,5 +1,3 @@
-
-from cgitb import html
 from django.shortcuts import redirect, render
 from airlines5.settings import EMAIL_HOST_USER
 from .forms import SearchForm, BookingForm
@@ -17,41 +15,55 @@ def home_view(request):
         'underbanners':underbanners,
         'iterator' : range(1, 11)
     }
-    print('ciao')
     if request.method == 'POST':
-        
         try:
             f_search = Search.objects.latest('id')
             if f_search.id == 1:
                 flyForm = SearchForm(request.POST, instance=f_search)
         except:
-            print('non esiste una ricerca')
             f_search = False
             flyForm = SearchForm(request.POST)
         if flyForm.is_valid():
-            print('ghj')
+            flyForm.save()
+            last_save = Search.objects.latest('id')
             try:
-                querySet = Fly.objects.filter(start = request.POST['start'], arrive=request.POST['arrive'], date=request.POST['date'], free_seats__gte = request.POST['person'])
-                if querySet[0] and f_search:
-                    flyForm.save()
-                    return redirect('/search/')
-                elif querySet[0]:
-                    flyForm.save()
-                    return redirect('/search/')
-            except:
-                context['nullSearch'] = True
+                if last_save.have_return2:
+                    print('ciao')
+                    start_travel = Fly.objects.filter(start = request.POST['start'], arrive=request.POST['arrive'], date=request.POST['date'], free_seats__gte = request.POST['person'])
+                    rit_travel = Fly.objects.filter(start = request.POST['arrive'], arrive=request.POST['start'], date=request.POST['date_rit'], free_seats__gte = request.POST['person'])
+                    try:
+                        if start_travel[0]:
+                            print('esiste start')
+                    except:
+                        context['noAnd'] = True
+                    try:
+                        if rit_travel[0]:
+                            print('esiste rit') 
+                    except:
+                        context['noRit'] = True
+                    try:
+                        if start_travel[0] and rit_travel[0]:
+                            return redirect('/search/')
+                    except:pass
+            except: 
+                try:
+                    start_travel = Fly.objects.filter(start = request.POST['start'], arrive=request.POST['arrive'], date=request.POST['date'], free_seats__gte = request.POST['person'])
+                    if start_travel[0]:
+                        return redirect('/search/')
+                except:
+                    context['noAnd'] = True
     return render(request, 'home.html', context)
 
 
 def search_view(request):
     underbanners = Underbanner.objects.all()
     search = Search.objects.latest('id')
-    querySet= Fly.objects.filter(start=search.start, arrive=search.arrive, date=search.date, free_seats__gte = search.person)
     context = {
         'underbanners':underbanners,
         'search':search,
-        'querySet':querySet,
     }
+    querySet= Fly.objects.filter(start=search.start, arrive=search.arrive, date=search.date, free_seats__gte = search.person)
+    context['querySet'] = querySet
     return render(request, 'search.html', context)
 
 
