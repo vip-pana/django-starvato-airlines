@@ -17,7 +17,9 @@ def home_view(request):
         'underbanners':underbanners,
         'iterator' : range(1, 11)
     }
+    print('ciao')
     if request.method == 'POST':
+        
         try:
             f_search = Search.objects.latest('id')
             if f_search.id == 1:
@@ -27,6 +29,7 @@ def home_view(request):
             f_search = False
             flyForm = SearchForm(request.POST)
         if flyForm.is_valid():
+            print('ghj')
             try:
                 querySet = Fly.objects.filter(start = request.POST['start'], arrive=request.POST['arrive'], date=request.POST['date'], free_seats__gte = request.POST['person'])
                 if querySet[0] and f_search:
@@ -61,7 +64,7 @@ def flyDetailView(request, id):
         'querySet':fly, #dati volo
         'booking':booking, #form prenotazione
         'saved_booking':saved_booking, #posti che non si possono toccare
-        'person':person.person, #persone che chiedono la prenotazione
+        'person':int(person.person), #persone che chiedono la prenotazione
     }
     if request.method == 'POST':
         booking = BookingForm(request.POST)

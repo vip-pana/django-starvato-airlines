@@ -1,5 +1,5 @@
 from datetime import datetime
-from re import M
+from statistics import mode
 from django.db import models
 from uuid import uuid4
 
@@ -74,7 +74,7 @@ class Fly(models.Model):
 
 
 class Search(models.Model):
-    PERSON_CHOICES =(
+    PERSON_CHOICES =( #rendere questo con un for per tutti i posti dell aereo
     ("1", "1"),
     ("2", "2"),
     ("3", "3"),
@@ -86,11 +86,13 @@ class Search(models.Model):
     ("9", "9"),
     ("10", "10"),
     )
+    
     start       = models.ForeignKey(Airport, on_delete=models.SET_NULL, null=True, related_name='S_start')
     arrive      = models.ForeignKey(Airport, on_delete=models.SET_NULL, null=True, related_name='S_arrive')
     date        = models.DateField(default=datetime.now)
-    person      = models.CharField(max_length=2, choices=PERSON_CHOICES, default=1)#models.CharField(max_length=2, choices=PERSON_CHOICES default=1)
-    ritorno     = models.BooleanField(default=False)
+    person      = models.CharField(max_length=2, choices=PERSON_CHOICES, default=1)
+    
+    
 
     def __str__(self) -> str:
         return str(self.start) + ' ' + str(self.arrive) + ' ' + str(self.date)
