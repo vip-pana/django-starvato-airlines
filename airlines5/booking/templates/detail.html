@@ -111,7 +111,7 @@
                         {% render_field booking.zip_code class='form-control'  id='zip' placeholder="71016" %}
                     </div>
                     <div class="col-md-4">
-                        {% render_field booking.airC_seat class='form-control'  id='code' placeholder="airC_seat" hidden=True %}
+                        {% render_field booking.airC_seat class='form-control'  id='code' placeholder="airC_seat"  %}
                     </div>
                     <div class="col-md-6">
                         {% render_field booking.fly class='form-control'  id='fly' placeholder="fly" hidden=True%}     
@@ -121,7 +121,7 @@
                         {% render_field booking.unique_id class='form-control'  id='unique_id' placeholder="unique_id" hidden=True %}
                     </div>
                     <div class="col-md-4">
-                        {% render_field booking.status class='form-control'  id='unique_id' placeholder="unique_id" %}
+                        {% render_field booking.status class='form-control'  id='unique_id' placeholder="unique_id" hidden=True%}
                     </div>
                     <div class="col-12">
                         <div class="form-check">

@@ -108,3 +108,7 @@ dovrei prendere le persone a cui inviare la mail direttamente dal model booking
 
 aggiornamento, non ho trovato un modo efficace per cambiare lo status(choiceField) dalla views.py, appena lo trovo dovrebbe essere fattibile sistemare molte cose
 
+---------------------------------------------------------------------
+ho sistemato la prenotazione per più persone ora tocca alla andata e ritorno
+
+creo un boolean

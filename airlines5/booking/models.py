@@ -90,19 +90,15 @@ class Search(models.Model):
     arrive      = models.ForeignKey(Airport, on_delete=models.SET_NULL, null=True, related_name='S_arrive')
     date        = models.DateField(default=datetime.now)
     person      = models.CharField(max_length=2, choices=PERSON_CHOICES, default=1)#models.CharField(max_length=2, choices=PERSON_CHOICES default=1)
+    ritorno     = models.BooleanField(default=False)
 
     def __str__(self) -> str:
         return str(self.start) + ' ' + str(self.arrive) + ' ' + str(self.date)
 
 
 class Booking(models.Model):
-    STATUS =(
-    ("complete", "complete"),
-    ("pending", "pending"),
-    ("null", "null"),)
-
-    unique_id       = models.CharField(max_length=36, blank=True)
-    status          = models.CharField(max_length=15, choices=STATUS, default='null') 
+    unique_id       = models.CharField(max_length=36, blank=True, default="0")
+    status          = models.CharField(max_length=15, blank=True) 
     fly             = models.ForeignKey(Fly, on_delete=models.SET_NULL, null=True, related_name='fly_booking')
     airC_seat       = models.CharField(max_length=5)
     name            = models.CharField(max_length=200)
@@ -114,13 +110,11 @@ class Booking(models.Model):
     zip_code        = models.IntegerField()
 
     def save(self, *args, **kwargs):
-        self.unique_id = generation()
+        if self.unique_id == "0":
+            self.unique_id = generation()
 
         super().save(*args, **kwargs)
 
     def __str__(self):
         return str(self.fly) +  ' ' + str(self.id)
-
-
-
 
