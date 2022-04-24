@@ -1,0 +1,107 @@
+{% extends 'parts/base.html' %}
+{% load widget_tweaks %}
+{% block content %}
+<link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
+
+    {% if noStart == True %}
+    <div class="alert alert-danger" role="alert" style="text-align: center;">
+        <h6>ci dispiace ma per l'andata non ci sono voli disponibili per questi aereoporti nella data inserita.<br>prova un altro giorno!</h6>
+    </div>
+    {% endif %}
+    <form action="" method="post">
+
+        {% csrf_token %}
+        <div class="container mt-4">
+            <div class="row" style="align-items: center; justify-content: center;">
+                <div class="col">
+                    <div class="input-group-lg">
+                        <label for="partenza">Partenza</label>
+                        <input type="text" name="" ondragleave="modStart" class='form-control' id="partenza">
+                        {% render_field flyForm.start class='form-select' name='start' id="partenzaForm" hidden=True%}
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="input-group-lg">
+                        <label for="arrivo">Arrivo</label>
+                        <input type="text" name="" class='form-control' id="arrivo">
+                        {% render_field flyForm.arrive class='form-select' name='' id="arrivoForm" hidden=True%}
+                    </div>   
+                </div>
+                <div class="col">
+                    <div class="input-group-lg">
+                        <label for="andata">Andata</label>
+                        {% render_field flyForm.date type="date" class='form-control datetime' name="date" id="andata"%}
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="input-group-lg">
+                        <label for="persone">Persone</label>
+                        <input type="number" name="persone" class='form-control' id="persone">
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="d-grid mt-3">
+                        <button type="button" onclick="confirmSearch()" class="btn btn-success btn-lg">Cerca</button>
+                        <button type="submit" style="display: none;" id='confirm'></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <ul style="display: none;">
+        {% for airport in all_airports%}
+        <li class="airports">{{airport.name}}</li>
+        {% endfor %}
+    </ul>
+
+
+    <script>
+        let arrive = document.querySelectorAll('#arrivoForm')
+        let start = document.querySelectorAll('#partenzaForm')
+        let button = document.getElementById('confirm')
+        let array_airports = []
+        const airports = document.getElementsByClassName('airports')
+        for(let m = 0; m < airports.length; m ++){
+        array_airports.push(airports[m].textContent)
+}
+    </script>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+    <script>
+        $( function() {
+          $( "#partenza" ).autocomplete({
+            source: array_airports
+          });
+        } );
+
+        $( function() {
+          $( "#arrivo" ).autocomplete({
+            source: array_airports
+          });
+        } );
+
+        function confirmSearch(){
+            let inputStart = document.getElementById('partenza').value
+            for(let i=0; i<parseInt(start[0].children.length); i++){
+                if(inputStart == start[0].children[i].textContent){
+                    start[0].value = start[0].children[i].value
+                }
+            }
+            let inputArrive = document.getElementById('arrivo').value
+            for(let i=0; i<parseInt(arrive[0].children.length); i++){
+                if(inputArrive == arrive[0].children[i].textContent){
+                    arrive[0].value = arrive[0].children[i].value
+                }
+            }
+            button.click()
+        }
+
+        </script>
+
+        
+
+    {% include 'parts/underbanners.html' %}
+{% endblock %}
+</body>
+</html>

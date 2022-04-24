@@ -1,7 +1,7 @@
 from django.shortcuts import redirect, render
 from airlines5.settings import EMAIL_HOST_USER
-from .forms import SearchForm, BookingForm
-from .models import Booking, Fly, Search
+from .forms import SearchForm, BookingForm, AeSForm
+from .models import AeS, Booking, Fly, Search
 from views_stuff.models import Underbanner
 
 from django.core.mail import send_mail
@@ -13,41 +13,39 @@ def home_view(request):
     context = {
         'flyForm':flyForm,
         'underbanners':underbanners,
-        'iterator' : range(1, 11)
     }
     if request.method == 'POST':
         try:
-            f_search = Search.objects.latest('id')
+            f_search = Search.objects.latest('id') #controlla se esiste una ricerca
             if f_search.id == 1:
-                flyForm = SearchForm(request.POST, instance=f_search)
-        except:
+                flyForm = SearchForm(request.POST, instance=f_search) #se esiste prendo l'instanza e modifico quella con il requesto post
+        except:         # se non esiste creo la ricerca con il requesto post
             f_search = False
             flyForm = SearchForm(request.POST)
-        if flyForm.is_valid():
+        
+        if flyForm.is_valid():          #se il form e' valido lo salvo
             flyForm.save()
             last_save = Search.objects.latest('id')
-            try:
-                if last_save.have_return2:
-                    print('ciao')
+            if last_save.have_return2 == 'yes':
+                try:
                     start_travel = Fly.objects.filter(start = request.POST['start'], arrive=request.POST['arrive'], date=request.POST['date'], free_seats__gte = request.POST['person'])
                     rit_travel = Fly.objects.filter(start = request.POST['arrive'], arrive=request.POST['start'], date=request.POST['date_rit'], free_seats__gte = request.POST['person'])
                     try:
                         if start_travel[0]:
                             print('esiste start')
-                    except:
-                        context['noAnd'] = True
+                    except: context['noAnd'] = True
                     try:
                         if rit_travel[0]:
                             print('esiste rit') 
-                    except:
-                        context['noRit'] = True
+                    except: context['noRit'] = True
                     try:
                         if start_travel[0] and rit_travel[0]:
                             return redirect('/search/')
                     except:pass
-            except: 
+                except: pass
+            else:
+                start_travel = Fly.objects.filter(start = request.POST['start'], arrive=request.POST['arrive'], date=request.POST['date'], free_seats__gte = request.POST['person'])
                 try:
-                    start_travel = Fly.objects.filter(start = request.POST['start'], arrive=request.POST['arrive'], date=request.POST['date'], free_seats__gte = request.POST['person'])
                     if start_travel[0]:
                         return redirect('/search/')
                 except:
@@ -58,12 +56,50 @@ def home_view(request):
 def search_view(request):
     underbanners = Underbanner.objects.all()
     search = Search.objects.latest('id')
+    aesForm = AeSForm()
     context = {
         'underbanners':underbanners,
         'search':search,
+        'aes':aesForm,
     }
-    querySet= Fly.objects.filter(start=search.start, arrive=search.arrive, date=search.date, free_seats__gte = search.person)
-    context['querySet'] = querySet
+    if search.have_return2 != 'no':
+        try:
+            aes = AeS.objects.latest('id')
+            context['aesSaved'] = aes
+            
+            if aes.sAndata == 'nope':
+                querySet= Fly.objects.filter(start=search.start, arrive=search.arrive, date=search.date, free_seats__gte = search.person)
+                context['querySet'] = querySet
+            elif aes.sAndata != 'nope' and aes.sRitorno == 'nope':
+                querySet= Fly.objects.filter(start=search.arrive, arrive=search.start, date=search.date_rit, free_seats__gte = search.person)
+                context['querySet'] = querySet
+                context['first_search']= str(aes.sAndata)
+                 #da capi perche'
+                
+            else:pass #da capi
+        except:
+            querySet= Fly.objects.filter(start=search.arrive, arrive=search.start, date=search.date_rit, free_seats__gte = search.person)
+            context['querySet'] = querySet
+        if request.method == 'POST':
+           
+            try:
+                aes_search = AeS.objects.latest('id')
+                #if aes_search.id == 1:   
+                aesForm = SearchForm(request.POST, instance=aes_search)
+            except:
+                aes_search = False
+                aesForm=AeSForm(request.POST)
+        if aesForm.is_valid():
+            
+            aesForm.save()
+            aes = AeS.objects.latest('id')
+            if aes.sAndata != 'nope' and aes.sRitorno != 'nope':
+                redirect('ticket/'+str(aes.sAndata)+'/')
+    else:
+        querySet= Fly.objects.filter(start=search.start, arrive=search.arrive, date=search.date, free_seats__gte = search.person)
+        context['querySet'] = querySet
+        
+    
     return render(request, 'search.html', context)
 
 

@@ -1,5 +1,5 @@
 from django import forms
-from .models import Search, Booking
+from .models import Search, Booking, AeS
 
 class SearchForm(forms.ModelForm):
     class Meta:
@@ -11,4 +11,9 @@ class SearchForm(forms.ModelForm):
 class BookingForm(forms.ModelForm):
     class Meta:
         model = Booking
+        fields = '__all__'
+
+class AeSForm(forms.ModelForm):
+    class Meta:
+        model = AeS
         fields = '__all__'

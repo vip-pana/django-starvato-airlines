@@ -88,20 +88,24 @@ class Search(models.Model):
     ("7", "7"),
     ("8", "8"),
     ("9", "9"),
-    ("10", "10"),
-    )
+    ("10", "10"),)
     
     start       = models.ForeignKey(Airport, on_delete=models.SET_NULL, null=True, related_name='S_start')
     arrive      = models.ForeignKey(Airport, on_delete=models.SET_NULL, null=True, related_name='S_arrive')
     date        = models.DateField(default=datetime.now)
     have_return2 = models.CharField(default='no', blank=True, null=True, max_length=5)
-    date_rit    = models.DateField(blank=True, null=True)
+    date_rit    = models.DateField(blank=True, null=True, default=datetime.now())
+    
     person      = models.CharField(max_length=2, choices=PERSON_CHOICES, default=1)
     
     
 
     def __str__(self) -> str:
         return str(self.start) + ' ' + str(self.arrive) + ' ' + str(self.date)
+
+class AeS(models.Model):
+    sAndata = models.CharField(max_length=100)
+    sRitorno = models.CharField(max_length=100, default='nope')
 
 
 class Booking(models.Model):

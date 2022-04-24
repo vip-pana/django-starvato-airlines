@@ -21,7 +21,7 @@
                 <div class="form-check">
                     <input class="form-check-input" type="radio" name="tipo_viaggio" onclick="activeRit()" id="flexRadioDefault2">
                     <label class="form-check-label" for="andata e ritorno">Andata e ritorno</label>
-                    {% render_field flyForm.have_return2 value='false' id='have_return' %}
+                    {% render_field flyForm.have_return2 value='false' id='have_return' hidden=True%}
                 </div>
             </div>
         </div>
@@ -89,7 +89,7 @@ let have_return = document.getElementById('have_return')
 function activeRit(){
     if (rit.checked){
         ritBox.disabled = false
-        have_return.textContent = 'yes'
+        have_return.value = 'yes'
     }
     
 }
@@ -97,8 +97,8 @@ function activeRit(){
 function disactiveRit(){
     if (rit.checked == false){
         ritBox.disabled = true
-        ritBox.textContent = null
-        have_return.textContent = 'no'
+        ritBox.innerText = null
+        have_return.value = 'no'
     }
 }
 

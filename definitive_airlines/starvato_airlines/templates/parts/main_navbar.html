@@ -1,0 +1,23 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a href="{%url 'home'%}" class="navbar-brand">Starvato Airlines</a>
+        <div class="d-flex">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="home" aria-current="page" href="{%url 'home'%}">Prenota</a> 
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id='find_p' href="{% url 'find_p' %}">Trova prenotazione</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id='' href="#">Info voli</a>
+                    </li>
+                </ul>
+          </div>
+        </div>
+    </div>
+</nav>

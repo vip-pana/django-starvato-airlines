@@ -144,3 +144,15 @@ TO-DO:
 -- creare ricerca come maria
 -- non far trovare partenza scelta in arrivo scelta
 -- sistemare problema delle prenotazioni multiple se esco dalle scelte mentre sto scegliendo
+
+
+devo inserire un campo nel model che e' andata e farlo checkare quando seleziono l'andata nel primo search poi salvarmi da qualche parte obj selezionato tramite id o unique id e poi richiamarlo dopo aver selezionato il primo 
+
+
+
+--------------------------------------------
+sto bestemmiando parecchio
+
+comunque il mio problema ora e' riuscire a mandare i dati al modello di andata e ritorno con is valid e dopo di che deve fare la ricerca del primo ticket e dopo se riesce del secondo
+
+sono fermo a errori con il javascript quindi poi vedimao di aggiustare quello

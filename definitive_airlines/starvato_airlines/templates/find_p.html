@@ -1,0 +1,87 @@
+{% extends 'parts/base.html'%}
+
+{% block content %}
+
+{% if error%}
+<div class="alert alert-danger" role="alert" style="text-align: center;">
+    <h6>ci dispiace, ma non esistono prenotazioni con questo codice!</h6>
+</div>
+{% endif%}
+
+{% if booking%}
+{%else%}
+<center>
+    <div class="container mt-5">
+        <h4> scrivi il tuo codice prenotazione</h4>
+        <form action="" method="post"> {% csrf_token %}
+            <input  style="width: 36rem; height: 3rem;" type="text" name="code" id="">
+            <button class="btn btn-success btn-lg" type="submit">Trova</button>
+        </form>
+    </div>
+</center>
+{% endif %}
+
+
+
+{% if booking %}
+                <li class="list-group-item mt-5">
+                    <div class="container containera">
+                        <div class="row">
+                            <div class="col">
+                                <h5>Intestatario: {{booking.name}} {{booking.surname}}</h5>
+                            </div>
+                            <div class="col">
+                                <h5>mail: {{booking.email}}</h5>
+                            </div>
+                        </div>
+                        <div class="row">
+                            
+                            <div class="col">
+                                <h5>informazioni:</h5>
+                                <h6>Indirizzo: {{booking.address}}, {{booking.city}}<br> {{booking.state}},{{booking.zip_code}} </h6>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <h5>Partenza :</br> {{booking.fly.start}}</h5>
+                            </div>
+                            <div class="col">
+                                <h5>Arrivo :</br> {{booking.fly.arrive}}</h5>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <h5>{{booking.fly.hour}}</h5>
+                            </div>
+                            <div class="col">
+                                <h5>{{booking.fly.hour}}</h5>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="d-grid gap-2">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <button type="button" class="btn btn-warning">Modifica info</button>  
+                            </div>
+                            <div class="col">
+                                <button type="button" class="btn btn-danger">Elimina prenotazione</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                </li>
+            
+{% endif %}     
+
+{% include 'parts/underbanners.html' %}
+
+
+<script>
+    let linkActive = document.getElementById('find_p')
+    let linkDisactive = document.getElementById('home')
+    linkActive.classList.toggle('active')
+    linkDisactive.classList.remove('active')
+</script>
+{% endblock %}

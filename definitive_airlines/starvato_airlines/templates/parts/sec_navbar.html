@@ -1,12 +1,9 @@
 <nav class="navbar navbar-light bg-light">
     <div class="container">
         <div class="row">
-            <h5 class="col">{{search.start}} => {{search.arrive}}</h5>
-
-            {% if search.have_return2 %}
-                <h5 class="col">Andata e ritorno</h5>
-            {% endif %}
+            <h5 class="col md-12">{{recap.start}} => {{recap.arrive}}</h5>
         </div>
+        <h5 style="justify-content: center; text-align: center;" class="col">Solo andata</h5>
         <a href="{% url 'home' %}" class="btn btn-warning">
             Cambia la ricerca
         </a>
