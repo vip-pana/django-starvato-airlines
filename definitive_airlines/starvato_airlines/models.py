@@ -52,6 +52,7 @@ class Fly(models.Model):
     start       = models.ForeignKey(Airport, on_delete=models.SET_NULL, null=True, related_name='start')
     arrive      = models.ForeignKey(Airport, on_delete=models.SET_NULL, null=True, related_name='arrive')
     date        = models.DateField(default=now)
+    date_rit    = models.DateField(default=now, blank=True)
     hour        = models.TimeField(default=now)
     price       = models.FloatField(default=50.00)
 
@@ -89,5 +90,9 @@ class Booking(models.Model):
 
     def __str__(self):
         return self.name + ' ' + self.surname + ' ' + str(self.fly) +  ' ' + str(self.id)
+
+class Cache(models.Model):
+    flyone = models.ForeignKey(Fly, on_delete=models.SET_DEFAULT, default=0, blank=True,related_name='flyone')
+    flytwo = models.ForeignKey(Fly, on_delete=models.SET_NULL, null=True, blank=True, related_name='flytwo')
 
 #class Search(models.Model):

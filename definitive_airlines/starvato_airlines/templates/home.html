@@ -7,11 +7,30 @@
     <div class="alert alert-danger" role="alert" style="text-align: center;">
         <h6>ci dispiace ma per l'andata non ci sono voli disponibili per questi aereoporti nella data inserita.<br>prova un altro giorno!</h6>
     </div>
+    {% elif noRit == True %}
+    <div class="alert alert-danger" role="alert" style="text-align: center;">
+        <h6>ci dispiace ma per l'il ritorno non ci sono voli disponibili per queste stazioni nella data inserita <br>prova un altro giorno!</h6>
+    </div>
     {% endif %}
     <form action="" method="post">
-
         {% csrf_token %}
+            <!-- andata e ritorno radio -->
         <div class="container mt-4">
+            <div class="row justify-content-start">
+                <div class="col-2">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="tipo2" id="flexRadioDefault1" onclick="disactiveRit()" checked>
+                        <label class="form-check-label" for="andata">Andata</label>
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="tipo2" onclick="activeRit()" id="flexRadioDefault2">
+                        <label class="form-check-label" for="andata e ritorno">Andata e ritorno</label>
+                        <input style="display: none;" type="checkbox" name="tipo" id="tipo">
+                    </div>
+                </div>
+            </div>
             <div class="row" style="align-items: center; justify-content: center;">
                 <div class="col">
                     <div class="input-group-lg">
@@ -27,13 +46,23 @@
                         {% render_field flyForm.arrive class='form-select' name='' id="arrivoForm" hidden=True%}
                     </div>   
                 </div>
-                <div class="col">
+            </div>
+            <div class="row">
+                <div class="col-auto">
                     <div class="input-group-lg">
                         <label for="andata">Andata</label>
                         {% render_field flyForm.date type="date" class='form-control datetime' name="date" id="andata"%}
                     </div>
                 </div>
-                <div class="col">
+                <div class="col-auto">
+                    <div class="input-group">
+                        <div class="input-group-lg"> <!-- aggiungere label a tutti i campi del form -->
+                            <label for="ritorno">Ritorno</label>
+                            {% render_field flyForm.date_rit type="date" class='form-control datetime' name="" id="date_rit" disabled=True%}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-auto">
                     <div class="input-group-lg">
                         <label for="persone">Persone</label>
                         <input type="number" name="persone" class='form-control' id="persone">
@@ -96,6 +125,20 @@
             }
             button.click()
         }
+        
+
+        let check = document.querySelector('#tipo')
+        let boxRit = document.getElementById('date_rit')
+        
+        function activeRit(){
+            check.checked = true
+            boxRit.disabled = false
+        }
+        function disactiveRit(){
+            check.checked = false
+            boxRit.disabled = true
+        }
+        
 
         </script>
 
@@ -104,4 +147,7 @@
     {% include 'parts/underbanners.html' %}
 {% endblock %}
 </body>
+
+
+
 </html>

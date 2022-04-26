@@ -1,7 +1,6 @@
-from enum import unique
 from django.shortcuts import render, redirect
 from .models import Airport
-from .forms import FlyForm, Fly, BookingForm, Booking
+from .forms import CacheForm, FlyForm, Fly, BookingForm, Booking
 from django.core.mail import send_mail
 from definitive_airlines.settings import EMAIL_HOST_USER
 
@@ -15,20 +14,47 @@ def home_view(request):
         }
     if request.method == 'POST':
         flyForm = FlyForm(request.POST)
+        
         if flyForm.is_valid():
             people = request.POST['persone']
             filt = Fly.objects.filter(start=request.POST['start'], arrive=request.POST['arrive'], date=request.POST['date'], free_seats__gte = request.POST['persone'])
             try:
-                if filt[0]:
-                    return search_view(request, filt, people)
+                if request.POST['tipo']:
+                    filt_rit = Fly.objects.filter(start=request.POST['arrive'], arrive=request.POST['start'], date=request.POST['date_rit'], free_seats__gte = request.POST['persone'])
+                    try:
+                        if filt[0]:     
+                            pass
+                    except:
+                        context['noStart'] = True
+                    try:
+                        if filt_rit[0]:
+                            return search_view(request, filt, people, filt_rit)
+                    except:
+                        filt_rit = True
+                        context['noRit'] = True
+            except:
+                filt_rit = False
+            try:
+                if filt[0] and filt_rit==False:
+                    
+                    return search_view(request, filt, people, filt_rit)
             except:
                 context['noStart'] = True
     return render(request, 'home.html', context)
 
 
-def search_view(request, filt, people):
+def search_view(request, filt, people, filt_rit):
+    cacheForm = CacheForm()
     recap = filt[0]
-    context = {'filt':filt, 'recap':recap ,'people':people}
+    context = {'filt':filt, 'filt_rit':filt_rit , 'recap':recap ,'people':people, 'cacheForm':cacheForm}
+    if request.method == 'POST':
+
+        cacheForm = CacheForm(request.POST)
+        
+        if cacheForm.is_valid():
+
+            print('CIAO')
+            return redirect('/success/')
     return render(request, 'search.html', context)
 
 
@@ -46,11 +72,12 @@ def flyDetailView(request, id, people):
     if request.method == 'POST':
         bookingForm = BookingForm(request.POST)
         if bookingForm.is_valid():
-            
             bookingForm.save()
             people -= 1
             booking_ls = Booking.objects.latest('id')
+            
             booking_ls.status = 'pending'
+            booking_ls.save()
             if people == 0:
                 pending_list = Booking.objects.filter(status='pending')
                 for book in pending_list:
