@@ -29,11 +29,9 @@
                         </div>
                         <div class="row">
                             <div class="d-grid gap-2">
-                                {% if filt_rit != False%}
-                                <button value="{{element.id}}"  class="btn btn-success start">continua</button>
-                                {%else%}
-                                <a href= "{% url 'flyDetail' element.id people%}" class="btn btn-primary">continua</a>
-                                {% endif %}
+                                
+                                <a href= "{% url 'flyDetail' element.id people filt_rit%}" class="btn btn-primary">continua</a>
+                                
                             </div>
                         </div>
                     </div>
@@ -42,51 +40,6 @@
                 {% endfor %}     
             </ul>
         </div>
-        {% if filt_rit != False %}
-        <div class="col">
-            <ul class="list-group">
-                <center><h3 class="mt-5">RITORNO</h3></center>
-                {% for element in filt_rit %}
-                <li class="list-group-item mt-3">
-                    <div class="container containeraArrive">
-                        <div class="row">
-                            <div class="col">
-                                <h4>Partenza :</br> {{element.start}}</h4>
-                            </div>
-                            <div class="col">
-                                <h4>Arrivo :</br> {{element.arrive}}</h4>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col">
-                                <h4>{{element.hour}}</h4>
-                            </div>
-                            <div class="col">
-                                <h4>{{element.hour}}</h4>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="d-grid gap-2">
-                               }
-                                <button value="{{element.id}}"  class="btn btn-success arrive" disabled>seleziona andata</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div>
-                </li>
-                {% endfor %}     
-            </ul>
-        </div>
-    </div>
-
-<form action="" method="post"> {% csrf_token %}
-    {% render_field cacheForm.flyone name='ciao' id='flyone' selected=True%}
-    {% render_field cacheForm.flytwo id='flytwo' %}
-   
-    <button id="confirm" type="submit">invia</button>
-</form>
-{% endif %}
-
 <script>
     let flyone = document.querySelector('#flyone')
     let flytwo = document.querySelector('#flytwo')

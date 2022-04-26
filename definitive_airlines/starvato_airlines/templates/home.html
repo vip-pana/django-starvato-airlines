@@ -35,14 +35,14 @@
                 <div class="col">
                     <div class="input-group-lg">
                         <label for="partenza">Partenza</label>
-                        <input type="text" name="" ondragleave="modStart" class='form-control' id="partenza">
+                        <input type="text" name="" ondragleave="modStart" class='form-control' id="partenza" required>
                         {% render_field flyForm.start class='form-select' name='start' id="partenzaForm" hidden=True%}
                     </div>
                 </div>
                 <div class="col">
                     <div class="input-group-lg">
                         <label for="arrivo">Arrivo</label>
-                        <input type="text" name="" class='form-control' id="arrivo">
+                        <input type="text" name="" class='form-control' id="arrivo" required>
                         {% render_field flyForm.arrive class='form-select' name='' id="arrivoForm" hidden=True%}
                     </div>   
                 </div>
@@ -65,7 +65,7 @@
                 <div class="col-auto">
                     <div class="input-group-lg">
                         <label for="persone">Persone</label>
-                        <input type="number" name="persone" class='form-control' id="persone">
+                        <input type="number" name="persone" class='form-control' id="persone" required>
                     </div>
                 </div>
                 <div class="col">

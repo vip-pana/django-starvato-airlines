@@ -66,7 +66,7 @@ class Fly(models.Model):
         super().save(*args, **kwargs)
 
     def __str__(self):
-        return str(self.start) + ' - ' + str(self.arrive) + ' ' +str(self.date)
+        return str(self.start) + ' - ' + str(self.arrive) + ' ' +str(self.date) + ' ' + str(self.hour)
 
 class Booking(models.Model):
     unique_id       = models.CharField(max_length=36, blank=True)
@@ -91,8 +91,5 @@ class Booking(models.Model):
     def __str__(self):
         return self.name + ' ' + self.surname + ' ' + str(self.fly) +  ' ' + str(self.id)
 
-class Cache(models.Model):
-    flyone = models.ForeignKey(Fly, on_delete=models.SET_DEFAULT, default=0, blank=True,related_name='flyone')
-    flytwo = models.ForeignKey(Fly, on_delete=models.SET_NULL, null=True, blank=True, related_name='flytwo')
-
-#class Search(models.Model):
+class People(models.Model):
+    people = models.IntegerField()

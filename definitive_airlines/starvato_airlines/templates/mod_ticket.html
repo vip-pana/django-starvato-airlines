@@ -1,0 +1,63 @@
+{% extends 'parts/base.html'%}
+{% load widget_tweaks %}
+
+{% block content %}
+<div class="container">
+    <center><h2 class="mt-5">Aggiorna i tuoi dati</h2></center>
+
+    {% if confirmSave == True%}
+    <div class="alert alert-success" role="alert" style="text-align: center;">
+        <h6>i dati della prenotazione sono stati modificati</h6>
+    </div>
+    {% endif %}
+    {% if confirmSave != True %}
+    <form action="" method="post">
+        {% csrf_token %}
+        <div class="col-md-12">
+            {% render_field booking.unique_id class='form-control'  id='unique_id' placeholder="unique_id" hidden=True %}
+        </div>
+        <div class="col-md-12">
+            <label for="name">name</label>
+            {% render_field booking.name class='form-control' id='name' placeholder='Mario' %}
+        </div>
+        <div class="col-md-12">
+            <label for="surname">surname</label>
+            {% render_field booking.surname class='form-control' id='surname' placeholder='Rossi'%}
+        </div>
+        <div class="col-md-12">
+            <label for="email">email</label>
+            {% render_field booking.email class='form-control' id='email' placeholder='mariorossi@example.it' %}
+        </div>
+        <div class="col-md-12">
+            <label for="address">address</label>
+            {% render_field booking.address class='form-control' id='address' placeholder="1234 Main St" %}
+        </div>
+        <div class="col-md-12">
+            <label for="city">city</label>
+            {% render_field booking.city class='form-control' id='city' placeholder="Los Angeles" %}
+        </div>
+        <div class="col-md-12">
+            <label for="state">state</label>
+            {% render_field booking.state class='form-control' id='state' placeholder="California" %}
+        </div>
+        <div class="col-md-12">
+            <label for="zip">zip</label>
+            {% render_field booking.zip_code class='form-control'  id='zip' placeholder="710112" %}
+        </div>
+        <div class="col-md-12">
+            {% render_field booking.fly class='form-control'  id='fly' placeholder="fly" hidden=True%}
+        </div>
+        <div class="col-md-12">
+            {% render_field booking.fly_seat class='form-control' id='code' placeholder="airC_seat" hidden=True %}
+        </div>
+        <div class="col-md-12 mt-3">
+            <div class="d-grid gap-2">
+                <button type="submit" class="btn btn-success" onclick="checkForm()">Salva</button>
+            </div>
+        </div>
+    </form>
+    {% endif %}
+    
+</div>
+
+{% endblock %}

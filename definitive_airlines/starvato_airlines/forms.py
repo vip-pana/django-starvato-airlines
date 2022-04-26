@@ -1,7 +1,5 @@
-from dataclasses import fields
-from pyexpat import model
 from django import forms
-from .models import Cache, Fly, Booking
+from .models import Fly, Booking
 
 class FlyForm(forms.ModelForm):
     class Meta:
@@ -13,7 +11,3 @@ class BookingForm(forms.ModelForm):
         model = Booking
         fields = ['unique_id','name','surname','email','address','city','state','zip_code','fly','fly_seat',]
 
-class CacheForm(forms.ModelForm):
-    class Meta:
-        model = Cache
-        fields = ['flyone','flytwo']

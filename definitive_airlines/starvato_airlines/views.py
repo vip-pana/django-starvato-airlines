@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
-from .models import Airport
-from .forms import CacheForm, FlyForm, Fly, BookingForm, Booking
+
+from .models import Airport, People
+from .forms import FlyForm, Fly, BookingForm, Booking
 from django.core.mail import send_mail
 from definitive_airlines.settings import EMAIL_HOST_USER
 
@@ -44,26 +45,20 @@ def home_view(request):
 
 
 def search_view(request, filt, people, filt_rit):
-    cacheForm = CacheForm()
+    
+    filt_rit= str(filt_rit)
     recap = filt[0]
-    context = {'filt':filt, 'filt_rit':filt_rit , 'recap':recap ,'people':people, 'cacheForm':cacheForm}
-    if request.method == 'POST':
-
-        cacheForm = CacheForm(request.POST)
-        
-        if cacheForm.is_valid():
-
-            print('CIAO')
-            return redirect('/success/')
+    context = {'filt':filt, 'filt_rit':filt_rit , 'recap':recap ,'people':people}
     return render(request, 'search.html', context)
 
 
 #mancherebbe person per far prenotare piu' persone
-def flyDetailView(request, id, people):
+def flyDetailView(request, id, people, filt_rit):
     fly = Fly.objects.get(id=id)
     booking_s = Booking.objects.filter(fly=fly)
     bookingForm = BookingForm()
     context = {
+        'filt_rit':filt_rit,
         'people':people,
         'fly':fly,
         'booking':BookingForm,
@@ -78,6 +73,7 @@ def flyDetailView(request, id, people):
             
             booking_ls.status = 'pending'
             booking_ls.save()
+
             if people == 0:
                 pending_list = Booking.objects.filter(status='pending')
                 for book in pending_list:
@@ -95,8 +91,7 @@ def flyDetailView(request, id, people):
             fly.free_seats -= 1
             fly.save()
             if people > 0:
-                return redirect('flyDetail', fly.id, people)
-            return redirect('/success/')
+                return redirect('flyDetail', fly.id, people, filt_rit)
         else:
             context['nullSearch'] = True
     return render(request, 'detail.html', context)
@@ -117,3 +112,19 @@ def find_p_view(request):
         except:
             context['error'] = True
     return render(request, 'find_p.html', context)
+
+def mod_ticket_view(request, id):
+    what_book = Booking.objects.get(id=id)
+    bookingForm = BookingForm(instance=what_book)
+    context = {'booking':bookingForm, 'confirmSave' : False}
+    if request.method=='POST':
+        bookingForm = BookingForm(request.POST, instance=what_book)
+        if bookingForm.is_valid():
+            bookingForm.save()
+            context['confirmSave'] = True
+    return render(request, 'mod_ticket.html', context)
+
+def delete_ticket_view(request, id):
+    what_book = Booking.objects.get(id=id)
+    what_book.delete()
+    return render(request, 'delete.html', {})

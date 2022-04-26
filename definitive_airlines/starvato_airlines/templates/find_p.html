@@ -63,10 +63,10 @@
                         </div>
                         <div class="row">
                             <div class="col">
-                                <button type="button" class="btn btn-warning">Modifica info</button>  
+                                <a href='{% url "mod_ticket" booking.id%}' type="button" class="btn btn-warning">Modifica dati prenotazione</a>  
                             </div>
                             <div class="col">
-                                <button type="button" class="btn btn-danger">Elimina prenotazione</button>
+                                <a href="{% url 'delete' booking.id%}" type="button" class="btn btn-danger">Elimina prenotazione</a>
                             </div>
                         </div>
                     </div>
