@@ -136,6 +136,7 @@ def mod_ticket_view(request, id):
 
 def delete_ticket_view(request, id):
     what_book = Booking.objects.get(id=id)
+    #what_book.fly.free_seats += 1
     what_book.delete()
     return render(request, 'delete.html', {})
 

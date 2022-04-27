@@ -105,7 +105,12 @@
 
         function menoPersona(){
             let personBox = document.getElementById('persone')
-            personBox.value --
+            if(personBox.value == 0){
+                
+            }else if (personBox.value > 0){
+                personBox.value --
+            }
+            
         }
 
         function piuPersona(){

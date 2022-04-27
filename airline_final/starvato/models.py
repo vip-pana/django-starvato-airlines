@@ -31,7 +31,6 @@ class Aircraft(models.Model):
     unique_id   = models.CharField(max_length=36, blank=True)
     model       = models.CharField(max_length=100)
     seats       = models.IntegerField(default=60)
-    km_tot      = models.IntegerField(default=0)
     pilots_num  = models.IntegerField(default=4)
     team_num    = models.IntegerField(default=4)
 
@@ -68,6 +67,7 @@ class Fly(models.Model):
 
     def __str__(self):
         return str(self.start) + ' - ' + str(self.arrive) + ' ' +str(self.date)
+
 
 class Booking(models.Model):
     unique_id       = models.CharField(max_length=36, blank=True)
