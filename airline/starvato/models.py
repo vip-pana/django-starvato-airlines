@@ -1,15 +1,14 @@
-from django.utils.timezone import now
 from django.db import models
+from django.utils.timezone import now
 from .utils import create_unique_id
 
 # Create your models here.
-
 class Identify(models.Model):
     unique_id = models.CharField(max_length=36)
 
     def __str__(self):
         return self.unique_id
-
+    
 class Airport(models.Model):
     unique_id   = models.CharField(max_length=36, blank=True)
     name        = models.CharField(max_length=100)
@@ -26,6 +25,7 @@ class Airport(models.Model):
             super().save(*args, **kwargs)
         else:
             super().save(*args, **kwargs)
+
 
 class Aircraft(models.Model):
     unique_id   = models.CharField(max_length=36, blank=True)
@@ -94,5 +94,3 @@ class Booking(models.Model):
     def __str__(self):
         return self.name + ' ' + self.surname + ' ' + str(self.fly) +  ' ' + str(self.id)
 
-class People(models.Model):
-    people = models.IntegerField()

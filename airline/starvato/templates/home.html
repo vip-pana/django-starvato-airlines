@@ -1,0 +1,174 @@
+{% extends 'parts/base.html' %}
+{% load widget_tweaks %}
+{% block content %}
+<link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
+
+    {% if noStart == True %}
+    <div class="alert alert-danger" role="alert" style="text-align: center;">
+        <h6>ci dispiace ma per l'andata non ci sono voli disponibili per questi aereoporti nella data inserita.<br>prova un altro giorno!</h6>
+    </div>
+    {% elif noRit == True %}
+    <div class="alert alert-danger" role="alert" style="text-align: center;">
+        <h6>ci dispiace ma per l'il ritorno non ci sono voli disponibili per queste stazioni nella data inserita <br>prova un altro giorno!</h6>
+    </div>
+    {% endif %}
+    <center><h5>Benvenuto, seleziona tra i voli consigliati.</h5></center>
+    <form action="" method="post">
+        {% csrf_token %}
+            <!-- andata e ritorno radio -->
+        <div class="container mt-4">
+            <div class="row justify-content-start" style="display: none;">
+                <div class="col-4">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="tipo2" id="flexRadioDefault1" onclick="disactiveRit()" checked>
+                        <label class="form-check-label" for="andata">Andata</label>
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="tipo2" onclick="activeRit()" id="flexRadioDefault2">
+                        <label class="form-check-label" for="andata e ritorno">Andata e ritorno</label>
+                        <input style="display: none;" type="checkbox" name="tipo" id="tipo">
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="align-items: center; justify-content: center;">
+                <div class="col">
+                    <div class="input-group-lg">
+                        <label for="partenza">Partenza</label>
+                        <input type="text" name="" ondragleave="modStart" class='form-control' id="partenza" required>
+                        {% render_field flyForm.start class='form-select' name='start' id="partenzaForm" hidden=True%}
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="input-group-lg">
+                        <label for="arrivo">Arrivo</label>
+                        <input type="text" name="" class='form-control' id="arrivo" required>
+                        {% render_field flyForm.arrive class='form-select' name='' id="arrivoForm" hidden=True%}
+                    </div>   
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-auto">
+                    <div class="input-group-lg">
+                        <label for="andata">Andata</label>
+                        {% render_field flyForm.date type="date" class='form-control datetime' name="date" id="andata"%}
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <div class="input-group">
+                        <div class="input-group-lg" style="display: none;"> <!-- aggiungere label a tutti i campi del form -->
+                            <label for="ritorno">Ritorno</label>
+                            {% render_field flyForm.date_rit type="date" class='form-control datetime' name="" id="date_rit" disabled=True%}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <div class="input-group-lg">
+                        <label for="persone">Persone</label>
+                        <div class="input-group mb-3" style="height: 3rem;">
+                            <input type="button" value="-" class="input-group-text" onclick="menoPersona()">
+                            <input type="number" style="background-color: white;" name="persone" class="form-control"  value="1" min="1" id="persone" disabled >
+                            <input type="button" value="+" class="input-group-text" onclick="piuPersona()" >
+                          </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="d-grid mt-3">
+                        <button type="button" onclick="confirmSearch()" class="btn btn-success btn-lg">Cerca</button>
+                        <button type="submit" style="display: none;" id='confirm'></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <ul style="display: none;">
+        {% for airport in all_airports%}
+        <li class="airports">{{airport.name}}</li>
+        {% endfor %}
+    </ul>
+
+
+    <script>
+        let arrive = document.querySelectorAll('#arrivoForm')
+        let start = document.querySelectorAll('#partenzaForm')
+        let button = document.getElementById('confirm')
+        let array_airports = []
+        const airports = document.getElementsByClassName('airports')
+        for(let m = 0; m < airports.length; m ++){
+        array_airports.push(airports[m].textContent)
+}
+    </script>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+    <script>
+
+        function menoPersona(){
+            let personBox = document.getElementById('persone')
+            if(personBox.value == 0){
+                
+            }else if (personBox.value > 0){
+                personBox.value --
+            }
+            
+        }
+
+        function piuPersona(){
+            let personBox = document.getElementById('persone')
+            personBox.value ++
+        }
+
+        $( function() {
+          $( "#partenza" ).autocomplete({
+            source: array_airports
+          });
+        } );
+
+        $( function() {
+          $( "#arrivo" ).autocomplete({
+            source: array_airports
+          });
+        } );
+
+        function confirmSearch(){
+            let inputStart = document.getElementById('partenza').value
+            for(let i=0; i<parseInt(start[0].children.length); i++){
+                if(inputStart == start[0].children[i].textContent){
+                    let started = start[0].children[i].value
+                    start[0].value = start[0].children[i].value
+                }
+            }
+            let inputArrive = document.getElementById('arrivo').value
+            for(let i=0; i<parseInt(arrive[0].children.length); i++){
+                if(inputArrive == arrive[0].children[i].textContent){
+                    let arrived = arrive[0].children[i].value
+                    arrive[0].value = arrive[0].children[i].value
+                }
+            }
+           if (start[0].value == '' || arrive[0].value == ''){
+               alert('seleziona tra i voli disponibili grazie')
+           }
+            let personBox = document.getElementById('persone')
+            personBox.disabled = false
+            button.click()
+        }
+        
+
+        let check = document.querySelector('#tipo')
+        let boxRit = document.getElementById('date_rit')
+
+        document.getElementById('andata').min = new Date().toISOString().split('T')[0];
+
+
+        </script>
+
+        
+
+    {% include 'parts/underbanners.html' %}
+{% endblock %}
+</body>
+
+
+
+</html>

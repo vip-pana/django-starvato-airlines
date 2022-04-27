@@ -1,13 +1,17 @@
+from django.shortcuts import render
+
+# Create your views here.
 from django.shortcuts import render, redirect
-from .models import Airport, People
+from .models import Airport
 from .forms import FlyForm, Fly, BookingForm, Booking
 from django.core.mail import send_mail
-from airline_final.settings import EMAIL_HOST_USER
+from airline.settings import EMAIL_HOST_USER
 from rest_framework import viewsets
 from .serialzers import *
 
 # Create your views here.
 def home_view(request):
+    
     pending_list = Booking.objects.filter(status='pending')
     for element in pending_list:
         element.delete()
@@ -17,6 +21,9 @@ def home_view(request):
         'flyForm':flyForm,
         'all_airports':all_airports,
         }
+    pending_list = Booking.objects.filter(status='pending')
+
+        
     if request.method == 'POST':
         flyForm = FlyForm(request.POST)
         
@@ -41,7 +48,6 @@ def home_view(request):
 #                filt_rit = False
             try:
                 if filt[0]:
-                    
                     return search_view(request, filt, people,)
             except:
                 context['noStart'] = True
@@ -76,18 +82,14 @@ def flyDetailView(request, id, people):
             booking_ls.status = 'pending'
             booking_ls.save()
             if people == 0:
-                print('ciao')
                 pending_list = Booking.objects.filter(status='pending')
-                
                 for book in pending_list:
-                    
                     message_name = book.name
                     message_email_to_send = book.email
                     ticket = book.unique_id
                     seat = book.fly_seat
-                    print(book)
                     send_mail(
-                        'Grazie '+ message_name +' per la fiducia!, ecco a lei il suo ticket', #subject
+                        'Grazie '+ message_name +' per la fiducia!, ecco a lei il suo ticket', 
                         'Ticket: '+ ticket + '\nposto a sedere ' + seat, # message
                         EMAIL_HOST_USER, 
                         [message_email_to_send])
