@@ -65,7 +65,11 @@
                 <div class="col-auto">
                     <div class="input-group-lg">
                         <label for="persone">Persone</label>
-                        <input type="number" name="persone" class='form-control' id="persone" required>
+                        <div class="input-group mb-3">
+                            <input type="button" value="-" class="input-group-text" onclick="menoPersona()">
+                            <input type="number" style="background-color: white;" name="persone" class="form-control"  value="1" min="1" id="persone" disabled >
+                            <input type="button" value="+" class="input-group-text" onclick="piuPersona()" >
+                          </div>
                     </div>
                 </div>
                 <div class="col">
@@ -98,6 +102,17 @@
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
     <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
     <script>
+
+        function menoPersona(){
+            let personBox = document.getElementById('persone')
+            personBox.value --
+        }
+
+        function piuPersona(){
+            let personBox = document.getElementById('persone')
+            personBox.value ++
+        }
+
         $( function() {
           $( "#partenza" ).autocomplete({
             source: array_airports
@@ -123,22 +138,17 @@
                     arrive[0].value = arrive[0].children[i].value
                 }
             }
+            let personBox = document.getElementById('persone')
+            personBox.disabled = false
             button.click()
         }
         
 
         let check = document.querySelector('#tipo')
         let boxRit = document.getElementById('date_rit')
-        
-        function activeRit(){
-            check.checked = true
-            boxRit.disabled = false
-        }
-        function disactiveRit(){
-            check.checked = false
-            boxRit.disabled = true
-        }
-        
+
+        document.getElementById('andata').min = new Date().toISOString().split('T')[0];
+
 
         </script>
 

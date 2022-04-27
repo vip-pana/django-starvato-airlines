@@ -1,0 +1,152 @@
+{% extends 'parts/base.html' %}
+{% load widget_tweaks %}
+{% load static %}
+{% block content %}
+
+
+<div class="container">
+    <div class="row justify-content-around mt-3" style="display: flex; align-items: center;">
+        <div class="col">
+            <h3>{{fly.date}}</h3>
+        </div>
+        <div class="col">
+            <h5><strong>codice volo: </strong> {{fly.unique_id}}</h5>
+        </div>
+    
+    </div>
+    <div class="row align-items-start mt-3" >
+        <div class="col">
+            <h3>{{fly.start}}</h3>
+        </div>
+        <div class="col">
+            <h3>{{fly.arrive}}</h3>
+        </div>
+        <div class="col">
+            <h3>prezzo:</h3>
+        </div>
+    </div>
+    <div class="row justify-content-start mt-3">
+        <div class="col-4">
+            <h3>{{fly.hour_start}}</h3>
+        </div>
+        <div class="col-4">
+            <h3>{{fly.time_arrive}}</h3>
+        </div>
+        <div class="col-4">
+            <h3>{{fly.price}}€</h3>
+        </div>
+     
+    </div>
+</div>
+
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col">
+            <div class="diver">
+                 <!-- legenda scelta posti -->
+                <h4>scegli il posto</h4>
+                <ul class="legend">
+                    <li>
+                        <div class="seat"></div>
+                        <small>n/a</small>
+                    </li>
+                    <li>
+                        <div class="seat selected"></div>
+                        <small>selezionato</small>
+                    </li>
+                    <li>
+                        <div class="seat occupied"></div>
+                        <small>occupato</small>
+                    </li>
+                </ul>
+                <!-- matrice scelta posti -->
+                <div class="containera">
+                </div>
+                <p class="text">hai selezionato il posto <span id="count">0</span></p>
+            </div>
+        </div>
+        <!-- contatti -->
+        <div class="col">
+            {% if people != 1 %}
+                <h3>n. biglietti: {{people}} </h3>
+            {% endif %}
+            
+            <h3>Lasciaci i tuoi dati:</h3>
+            <form action="" method="post">
+                {% csrf_token %}
+                <div class="col-md-12">
+                    {% render_field booking.unique_id class='form-control'  id='unique_id' placeholder="unique_id" hidden=True %}
+                </div>
+                <div class="col-md-12">
+                    <label for="name">name</label>
+                    {% render_field booking.name class='form-control' id='name' placeholder='Mario' %}
+                </div>
+                <div class="col-md-12">
+                    <label for="surname">surname</label>
+                    {% render_field booking.surname class='form-control' id='surname' placeholder='Rossi'%}
+                </div>
+                <div class="col-md-12">
+                    <label for="email">email</label>
+                    {% render_field booking.email class='form-control' id='email' placeholder='mariorossi@example.it' %}
+                </div>
+                <div class="col-md-12">
+                    <label for="address">address</label>
+                    {% render_field booking.address class='form-control' id='address' placeholder="1234 Main St" %}
+                </div>
+                <div class="col-md-12">
+                    <label for="city">city</label>
+                    {% render_field booking.city class='form-control' id='city' placeholder="Los Angeles" %}
+                </div>
+                <div class="col-md-12">
+                    <label for="state">state</label>
+                    {% render_field booking.state class='form-control' id='state' placeholder="California" %}
+                </div>
+                <div class="col-md-12">
+                    <label for="zip">zip</label>
+                    {% render_field booking.zip_code class='form-control'  id='zip' placeholder="710112" %}
+                </div>
+                <div class="col-md-12">
+                    {% render_field booking.fly class='form-control'  id='fly' placeholder="fly" hidden=True%}
+                </div>
+                <div class="col-md-12">
+                    {% render_field booking.fly_seat class='form-control' id='code' placeholder="airC_seat" hidden=True %}
+                </div>
+                <div class="col-md-12 mt-3">
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-success" onclick="checkForm()">Continua</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<p id="selectId" style="display: none;">{{fly.id}}</p>
+
+<ul style="display: none;">
+    {% for elements in booking_s%}
+    <li class="saved_li">{{elements.fly_seat}}</li>
+    {% endfor %}
+</ul>
+
+<script>
+    function checkForm(){
+        code = document.getElementById('code').value
+        if(code == false){
+            alert('seleziona il posto!')
+        }
+    }
+    const pyPosti =  '{{fly.aircraft.seats}}'
+    console.log(pyPosti)
+    const py_saved_booking = document.getElementsByClassName('saved_li')
+</script>
+
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/seats.css' %}">
+<script src="{% static 'js/seats.js' %}"></script>
+
+
+
+{% endblock %}

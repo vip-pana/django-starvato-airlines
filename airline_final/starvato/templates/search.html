@@ -1,0 +1,89 @@
+{% extends 'parts/base.html' %}
+
+{%block content%}
+{% load widget_tweaks %}
+{% include 'parts/sec_navbar.html' %}
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <ul class="list-group">
+                <center><h3 class="mt-5">ANDATA</h3></center>
+                {% for element in filt %}
+                <li class="list-group-item mt-3">
+                    <div class="container containeraStart">
+                        <div class="row">
+                            <div class="col">
+                                <h4>Partenza :</br> {{element.start}}</h4>
+                            </div>
+                            <div class="col">
+                                <h4>Arrivo :</br> {{element.arrive}}</h4>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <h4>{{element.hour_start}}</h4>
+                            </div>
+                            <div class="col">
+                                <h4>{{element.time_arrive}}</h4>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="d-grid gap-2">
+                                
+                                <a href= "{% url 'flyDetail' element.id people%}" class="btn btn-primary">continua</a>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                </li>
+                {% endfor %}     
+            </ul>
+        </div>
+<script>
+    let flyone = document.querySelector('#flyone')
+    let flytwo = document.querySelector('#flytwo')
+    let tcontainerOne = document.querySelector('.containeraStart')
+    let tcontainerTwo = document.querySelector('.containeraArrive')
+    let buttonArrive = document.querySelectorAll('.arrive')
+    let confirm = document.getElementById('confirm')
+    
+    tcontainerOne.addEventListener('click', (e)=> { 
+    if (e.target.classList.contains('start')){
+        try {
+            for(let i = 0; i < flyone.children.length; i++){
+                if(flyone.children[i].value == e.target.value){
+                    flyone.value = e.target.value
+                    flyone.children[i] = true
+                    console.log(flyone.children[i])
+                    
+                }
+            }
+        } catch (error) {
+            console.log('no')
+        }
+        for(let j = 0;j<buttonArrive.length; j++){
+            buttonArrive[j].disabled = false
+            buttonArrive[j].textContent = 'continua'
+        }
+    }
+    })
+    tcontainerTwo.addEventListener('click', (e)=> { 
+    if (e.target.classList.contains('arrive')){
+        try {
+            for(let p = 0; p < flytwo.children.length; p++){
+                if(flytwo.children[p].value == e.target.value){
+                    flytwo.value = e.target.value
+                }
+            }
+        } catch (error) {
+            console.log('no')
+        }
+        confirm.click()
+    }
+});
+   
+</script>
+
+
+{% endblock %}

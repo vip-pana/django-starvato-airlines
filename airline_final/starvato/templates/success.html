@@ -1,0 +1,60 @@
+{% extends 'parts/base.html' %}
+
+{% load static %}
+
+{%block content%}
+
+<div class="container mt-5" style="justify-content: center; text-align: center;">
+    <img src="{% static 'images/doggy.jpeg' %}" class="rounded mx-auto d-block"  alt="...">
+    <h1>ce l'hai fatta</h1>
+    <h3>ti abbiamo inviato una mail con il numero di prenotazione :)</h3>
+</div>
+
+{% for booking in pending_list %}
+    <li class="list-group-item mt-5">
+        <div class="container containera">
+            <div class="row">
+                <div class="col">
+                    <h5>Intestatario: {{booking.name}} {{booking.surname}}</h5>
+                </div>
+                <div class="col">
+                    <h5>mail: {{booking.email}}</h5>
+                </div>
+            </div>
+            <div class="row">
+                
+                <div class="col">
+                    <h5>informazioni:</h5>
+                    <h6>Indirizzo: {{booking.address}}, {{booking.city}}<br> {{booking.state}},{{booking.zip_code}} </h6>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <h5>Partenza :</br> {{booking.fly.start}}</h5>
+                </div>
+                <div class="col">
+                    <h5>Arrivo :</br> {{booking.fly.arrive}}</h5>
+                </div>
+                <div class="col">
+                    <h5>codice prenotazione :</br> {{booking.unique_id}}</h5>
+                </div>
+                <div class="col">
+                    <h5>posto:</br> {{booking.fly_seat}}</h5>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <h5>{{booking.fly.hour_start}}</h5>
+                </div>
+                <div class="col">
+                    <h5>{{booking.fly.time_arrive}}</h5>
+                </div>
+            </div>
+            <div class="row">
+                <div class="d-grid gap-2">
+                </div>
+            </div>
+
+{% endfor %}
+
+{% endblock %}

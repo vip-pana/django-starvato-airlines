@@ -53,6 +53,8 @@ class Fly(models.Model):
     arrive      = models.ForeignKey(Airport, on_delete=models.SET_NULL, null=True, related_name='arrive')
     date        = models.DateField(default=now)
     date_rit    = models.DateField(default=now, blank=True)
+    hour_start = models.TimeField(default=now)
+    time_arrive = models.TimeField(default=now)
     price       = models.FloatField(default=50.00)
 
     def save(self, *args, **kwargs):
@@ -65,7 +67,7 @@ class Fly(models.Model):
         super().save(*args, **kwargs)
 
     def __str__(self):
-        return str(self.start) + ' - ' + str(self.arrive) + ' ' +str(self.date) + ' ' + str(self.hour)
+        return str(self.start) + ' - ' + str(self.arrive) + ' ' +str(self.date)
 
 class Booking(models.Model):
     unique_id       = models.CharField(max_length=36, blank=True)
